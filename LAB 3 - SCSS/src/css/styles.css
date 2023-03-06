@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-html, body {
+html,
+body {
   margin: 0;
 }
 
@@ -18,7 +19,13 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0 0 1rem 0;
 }
 
@@ -28,7 +35,8 @@ ul {
   list-style: none;
 }
 
-input, button {
+input,
+button {
   outline: none;
 }
 
@@ -43,29 +51,35 @@ hr {
   display: flex;
   overflow-x: scroll;
 }
-.card-list > .card, .card-list > .card-primary {
+.card-list > .card,
+.card-list > .card-primary {
   margin-right: 1rem;
 }
 
-.card, .card-primary {
+.card,
+.card-primary {
   min-width: calc(14.2857142857vw - 1rem);
   padding: 1rem;
   border-radius: 0.3rem;
   border: solid 1px #ddd;
   margin-bottom: 0.8rem;
 }
-.card > .card-image, .card-primary > .card-image {
+.card > .card-image,
+.card-primary > .card-image {
   padding: 1.5rem;
   margin-bottom: 1rem;
 }
-.card > .card-image > *, .card-primary > .card-image > * {
+.card > .card-image > *,
+.card-primary > .card-image > * {
   width: 100%;
 }
-.card > .card-body, .card-primary > .card-body {
+.card > .card-body,
+.card-primary > .card-body {
   color: #a3a6a8;
   margin-bottom: 0.5rem;
 }
-.card > .card-title, .card-primary > .card-title {
+.card > .card-title,
+.card-primary > .card-title {
   margin-bottom: 0;
   font-size: 23px;
 }
@@ -77,7 +91,9 @@ hr {
   color: #8e3819;
 }
 
-.form-control, form > .form-group > .form-group-control, form > .form-control {
+.form-control,
+form > .form-group > .form-group-control,
+form > .form-control {
   width: 100%;
   padding: 1rem 1.5rem;
   border-radius: 0.4rem;
