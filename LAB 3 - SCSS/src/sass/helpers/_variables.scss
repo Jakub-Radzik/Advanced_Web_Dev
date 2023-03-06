@@ -1,16 +1,16 @@
 // Fonts
-$font-family: 'Noto Sans', sans-serif;
+$font-family: "Noto Sans", sans-serif;
 $font-size: 13px;
 
 // Colors
 $primary: #db5f32;
 $colors: (
-    "ecru": #bfb48f,
-    "liver": #564e58,
-    "cordovan": #904e55,
-    "isabelline": #f2efe9,
-    "raisin-black": #252627,
-    "light-green": #00ffd0,
+  "ecru": #bfb48f,
+  "liver": #564e58,
+  "cordovan": #904e55,
+  "isabelline": #f2efe9,
+  "raisin-black": #252627,
+  "light-green": #00ffd0,
 ) !default;
 
 // Grid and containers
@@ -22,17 +22,23 @@ $hr-background-color: #ddd;
 
 // Forms
 $input-padding: 1rem 1.5rem;
-$input-border-radius: .4rem;
+$input-border-radius: 0.4rem;
 $input-font-size: 1rem;
 $input-border-width: 0;
-$input-border-color: map-get($map: $colors, $key: 'ecru');
+$input-border-color: map-get(
+  $map: $colors,
+  $key: "ecru",
+);
 
 // Buttons
 $btn-padding: 20px 1.2rem;
 $btn-border-radius: $border-radius;
 $btn-font-size: 1rem;
 $btn-border-width: 0;
-$btn-border-color: map-get($map: $colors, $key: 'ecru');
+$btn-border-color: map-get(
+  $map: $colors,
+  $key: "ecru",
+);
 
 // Cards
 $card-width: calc(100vw / 7 - 1rem);

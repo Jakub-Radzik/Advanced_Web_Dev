@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 // helpers
-@import './helpers/variables';
-@import './helpers/mixins';
+@import "./helpers/variables";
+@import "./helpers/mixins";
 
 // base
-@import './base/_reset';
+@import "./base/_reset";
 
 // components
-@import './components/cards';
-@import './components/forms';
+@import "./components/cards";
+@import "./components/forms";
 
 // layouts
-@import './layouts/grid';
-@import './layouts/header';
-@import './layouts/main';
-@import './layouts/footer';
+@import "./layouts/grid";
+@import "./layouts/header";
+@import "./layouts/main";
+@import "./layouts/footer";
 
 // pages
-@import './pages/home';
+@import "./pages/home";
