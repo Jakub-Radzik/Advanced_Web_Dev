@@ -1,0 +1,12 @@
+{
+  "name": "sass-lab",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "node-sass": "^5.0.0"
+  },
+  "keywords": [],
+  "author": "Jakub Radzik",
+  "license": "ISC"
+}

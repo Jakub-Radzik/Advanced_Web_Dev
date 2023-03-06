@@ -1,0 +1,19 @@
+@mixin button($color) {
+    cursor: pointer;
+    padding: $btn-padding;
+    border-radius: $btn-border-radius;
+    font-size: $btn-font-size;
+    border: $btn-border-width $btn-border-color;
+    background: $color;
+    color: lighten($color: $color, $amount: 90);
+
+    &:hover {
+        background: darken($color: $color, $amount: 20);
+        color: lighten($color: $color, $amount: 80)
+    }
+}
+
+@mixin gradient($start-color, $end-color, $direction) {
+    background: $start-color;
+    background: linear-gradient($direction, $start-color, $end-color);
+}

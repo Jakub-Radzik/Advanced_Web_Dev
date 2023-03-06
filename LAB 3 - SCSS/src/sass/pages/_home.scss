@@ -1,0 +1,52 @@
+$aside-width: 250px;
+$base-aside-color: map-get($map: $colors, $key: 'light-green');
+$base-aside-font-color: map-get($map: $colors, $key: 'raisin-black'); 
+
+.content {
+    display: flex;
+    flex-grow: 1;
+
+    & > .aside {
+        min-width: 250px;
+        padding: 15px;
+        @include gradient($base-aside-color, lighten($color: $base-aside-color, $amount: 10), to bottom);
+        
+        ul {
+            & > li {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                padding: $aside-list-item-padding;
+                margin-top: $aside-list-item-spacing;
+                background-color: lighten($color: $base-aside-color, $amount: 20);
+                border-radius: $border-radius;
+                & > svg {
+                    padding: 15px;  
+                    border-radius: 25%;
+                    background-color: lighten($color: $base-aside-color, $amount: 10);
+                }
+                & > a {
+                    color: $base-aside-font-color;
+                    margin-left: 10px;
+                    text-decoration: none;
+                }
+
+                &:hover {
+                    background-color: darken($color: $base-aside-color, $amount: 20);
+                    & > svg {
+                        background-color: darken($color: $base-aside-color, $amount: 50);
+                        color: lighten($color: $base-aside-font-color, $amount: 80);
+                    }
+                    & > a {
+                        color: lighten($color: $base-aside-font-color, $amount: 80);
+                    }
+                }
+            }
+        }
+    }
+
+    & > main {
+        flex-grow: 1;
+    }
+}
