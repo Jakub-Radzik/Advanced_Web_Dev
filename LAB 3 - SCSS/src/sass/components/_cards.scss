@@ -38,7 +38,13 @@
 
   &-primary {
     @extend .card;
-    background: lighten($color: $primary, $amount: 30);
+
+    @include gradient(
+      map-get($map: $colors, $key: "isabelline"),
+      darken($color: $primary, $amount: 10),
+      to top
+    );
+    
     border: solid $card-primary-border-width $card-primary-border-color;
 
     & > .card-body {

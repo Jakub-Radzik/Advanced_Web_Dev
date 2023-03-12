@@ -1,4 +1,4 @@
-.form-control {
+%form-control {
   width: 100%;
   padding: $input-padding;
   border-radius: $input-border-radius;
@@ -8,7 +8,7 @@
 
 form {
   & > .form-control {
-    @extend .form-control;
+    @extend %form-control;
   }
 
   & > .form-group {
@@ -16,7 +16,7 @@ form {
     display: inline-flex;
 
     & > .form-group-control {
-      @extend .form-control;
+      @extend %form-control;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
