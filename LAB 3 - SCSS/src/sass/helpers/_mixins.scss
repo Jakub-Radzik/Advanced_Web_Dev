@@ -17,3 +17,13 @@
   background: $start-color;
   background: linear-gradient($direction, $start-color, $end-color);
 }
+
+@mixin loader-bar($size,$bar-width, $color, $timing, $direction: normal) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: $bar-width solid transparent;
+  border-bottom: $bar-width solid $color;
+  border-top: $bar-width solid $color;
+  animation: spin $timing linear infinite $direction;
+}

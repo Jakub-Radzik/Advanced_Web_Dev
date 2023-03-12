@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 html,
 body {
   margin: 0;
@@ -116,6 +124,30 @@ form > .form-group > .form-group-button {
 form > .form-group > .form-group-button:hover {
   background: #8e3819;
   color: white;
+}
+
+.loader-positioner {
+  position: fixed;
+  bottom: 100px;
+  left: 30px;
+}
+.loader-positioner > .loader {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  border-bottom: 10px solid #252627;
+  border-top: 10px solid #252627;
+  animation: spin 2s linear infinite normal;
+}
+.loader-positioner > .loader > div {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  border-bottom: 10px solid #904e55;
+  border-top: 10px solid #904e55;
+  animation: spin 1s linear infinite reverse;
 }
 
 .container {

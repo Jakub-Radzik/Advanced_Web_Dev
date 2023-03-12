@@ -1,0 +1,16 @@
+$base-loader-size: 100px;
+$loader-bar-width: 10px;
+
+.loader-positioner {
+  position: fixed;
+  bottom: 100px;
+  left: 30px;
+
+  & > .loader {
+    @include loader-bar($base-loader-size, $loader-bar-width, map-get($map: $colors, $key: "raisin-black"), 2s);
+
+    & > div {
+        @include loader-bar($base-loader-size - 2 * $loader-bar-width, $loader-bar-width, map-get($map: $colors, $key: "cordovan"), 1s, reverse);
+    }
+  }
+}
