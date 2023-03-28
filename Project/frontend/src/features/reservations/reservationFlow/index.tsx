@@ -1,16 +1,15 @@
 import { Box, Button, Group, Stepper } from "@mantine/core";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Movie } from "../../../types/movie";
+// import { useParams } from "react-router-dom";
 import { Show } from "../../../types/show";
 import { Cinema } from "../cinema";
 import { MovieSelection } from "./components/movieSelection";
 
 export const ReservationFlow = () => {
   const [active, setActive] = useState(0);
-  const [highestStepVisited, setHighestStepVisited] = useState(active);
+  const [, setHighestStepVisited] = useState(active);
 
-  let { showId } = useParams();
+  // let { showId } = useParams();
 
   const show: Show = {
     movie: {
@@ -21,12 +20,11 @@ export const ReservationFlow = () => {
       duration: "2h 22min",
       genre: ["Crime", "Drama"],
       rate: 9.3,
-      cinemaScreenings: []
+      cinemaScreenings: [],
     },
     date: "2021-05-01",
     time: "20:00",
-  }
-
+  };
 
   const handleStepChange = (nextStep: number) => {
     const isOutOfBounds = nextStep > 3 || nextStep < 0;
@@ -52,7 +50,7 @@ export const ReservationFlow = () => {
           description='Potwierdź wybrany film'
           allowStepSelect={false}
         >
-          <MovieSelection show={show}/>
+          <MovieSelection show={show} />
         </Stepper.Step>
 
         <Stepper.Step
