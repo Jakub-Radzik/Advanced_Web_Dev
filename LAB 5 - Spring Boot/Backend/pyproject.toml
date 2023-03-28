@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "Backend"
+version = "0.1.0"
+description = "Basic book API"
+authors = ["Kamil Herbetko, Jakub Radzik, Piotr Grygoruk"]
+license = "MIT"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.87.0"
+uvicorn = "^0.20.0"
+tortoise-orm = {extras = ["asyncpg"], version = "^0.19.2"}
+python-dotenv = "^0.21.0"
+redis = "^4.4.2"
+fastapi-limiter = "^0.1.5"
+python-multipart = "^0.0.5"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+coverage = {extras = ["toml"], version = "^6.5.0"}
+black = "^22.10.0"
+httpx = "^0.23.1"
+requests = "^2.28.1"
+
+
+[tool.black]
+target-version = ['py310']
+exclude = '''
+(
+  /(
+    \.git
+    | \.mypy_cache
+    | \.pytest_cache
+    | htmlcov
+    | venv
+    | .venv
+  )/
+)
+'''
+
+
+[tool.coverage]
+    [tool.coverage.run]
+
+    source = ["source"]
+    branch = true
+    omit = ['']
+
+    [tool.coverage.report]
+    exclude_lines = [
+        "# noqa",
+        "raise NotImplementedError"
+    ]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
