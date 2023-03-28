@@ -65,7 +65,7 @@ export const Cinema = () => {
   };
 
   return (
-    <Box style={{ border: "1px solid black" }} bg={"#dbd9d9"} p={"md"}>
+    <Flex bg={"#dbd9d9"} p={"md"} direction={"column"} align={"center"}>
       <Text>{kino.name}</Text>
       <Screen seatWidth={kino.screenWidth} justify={"center"} />
       <Flex
@@ -94,6 +94,6 @@ export const Cinema = () => {
           );
         })}
       </Flex>
-    </Box>
+    </Flex>
   );
 };

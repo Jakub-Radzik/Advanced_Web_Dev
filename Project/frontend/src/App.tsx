@@ -1,12 +1,14 @@
 import "./App.css";
 import { AppShell } from "@mantine/core";
-import { Header, Navbar } from "./layout";
+import { Header } from "./layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Repertoire } from "./pages/repertoire";
 import { Reservation } from "./pages/reservation";
 
 function App() {
   return (
+
+    <BrowserRouter>
     <AppShell
       padding='md'
       header={<Header />}
@@ -19,13 +21,12 @@ function App() {
         },
       })}
     >
-      <BrowserRouter>
         <Routes>
           <Route path='/' element={<Repertoire />} />
-          <Route path='/reservate' element={<Reservation/>} />
+          <Route path='/reservate/:showId' element={<Reservation />} />
         </Routes>
-      </BrowserRouter>
     </AppShell>
+      </BrowserRouter>
   );
 }
 

@@ -9,7 +9,6 @@ export type Movie = {
     cinemaScreenings: CinemaScreening[]
 }
 
-
 export type CinemaScreening = {
     date: string,
     times: string[],

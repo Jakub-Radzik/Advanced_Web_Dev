@@ -1,7 +1,5 @@
-import { ReservationFlow } from "../../features/reservations/reservationFlow"
+import { ReservationFlow } from "../../features/reservations/reservationFlow";
 
 export const Reservation = () => {
-    return (
-        <ReservationFlow/>
-    )
-}
+  return <ReservationFlow />;
+};
