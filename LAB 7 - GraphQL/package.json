@@ -1,0 +1,16 @@
+{
+  "name": "first-graphql-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/App.js",
+    "seed": "node ./src/helpers/seed.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql-yoga": "^3.8.0",
+    "nodemon": "^2.0.22"
+  }
+}
