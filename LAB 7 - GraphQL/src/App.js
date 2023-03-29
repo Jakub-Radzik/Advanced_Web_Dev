@@ -1,18 +1,7 @@
 const {createServer} = require('http')
-const { createYoga, createSchema } = require('graphql-yoga')
+const { createYoga } = require('graphql-yoga')
  
-const schema = createSchema({
-  typeDefs: /* GraphQL */ `
-    type Query {
-      hello: String
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => 'world'
-    }
-  }
-})
+const {schema} = require('./schema')
 
 const yoga = createYoga({ schema })
 const server = createServer(yoga)

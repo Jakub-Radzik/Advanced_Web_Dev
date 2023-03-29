@@ -1,6 +1,6 @@
-import { createSchema } from 'graphql-yoga'
- 
-export const schema = createSchema({
+const { createSchema } = require('graphql-yoga')
+
+const schema = createSchema({
   typeDefs: /* GraphQL */ `
     type Query {
       hello: String
@@ -12,4 +12,8 @@ export const schema = createSchema({
     }
   }
 })
+
+module.exports = {
+  schema
+}
 
