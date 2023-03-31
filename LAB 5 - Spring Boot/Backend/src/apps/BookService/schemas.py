@@ -10,14 +10,14 @@ Book_Pydantic = pydantic_model_creator(Book, name="Book")
 
 class BookIn(BaseModel):
     title: str
-    author: str
+    author: int
     pages: int
 
 
 class BookUpdate(BaseModel):
     id: int
     title: str
-    author: str
+    author: int
     pages: int
     is_borrowed: bool
 

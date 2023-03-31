@@ -6,6 +6,7 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from src.settings import settings
 from src.apps.BookService.routers import router as book_router
+from src.apps.Author.routers import router as author_router
 
 app = FastAPI()
 
@@ -33,12 +34,12 @@ app.add_middleware(
 )
 
 app.include_router(book_router, prefix="/book_service", tags=["Book Service"])
-
+app.include_router(author_router, prefix="/author", tags=["Author"])
 
 register_tortoise(
     app,
     db_url=f"postgres://postgres:postgres@{settings.DB_HOST}:5432/db",
-    modules={"models": ["src.apps.BookService.models"]},
+    modules={"models": ["src.apps.Author.models", "src.apps.BookService.models"]},
     generate_schemas=True,
     add_exception_handlers=True,
 )
