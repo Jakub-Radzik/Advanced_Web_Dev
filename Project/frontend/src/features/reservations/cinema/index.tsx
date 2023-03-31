@@ -83,6 +83,7 @@ export const Cinema = () => {
               {row.map((seat, seatIndex) => {
                 return seat ? (
                   <Seat
+                    row={rowIndex + 1}
                     i={seatIndex + 1}
                     seatState={getSeatState(rowIndex + 1, seatIndex + 1)}
                   />

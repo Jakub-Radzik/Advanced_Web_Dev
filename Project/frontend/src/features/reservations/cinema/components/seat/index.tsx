@@ -1,8 +1,12 @@
-import { Box, Flex, Menu, Text, UnstyledButton } from "@mantine/core";
+import { Box, Flex, Menu, Text, Tooltip, UnstyledButton } from "@mantine/core";
+import { useState } from "react";
 import { ROW_SPACE, SEAT_SIZE, SEAT_SPACE } from "../../../../../constants";
+import { useReservationContext } from "../../../state";
+import { Ticket, tickets } from "../../../state/mocks";
 
 type SeatProps = {
   i: number;
+  row: number;
   seatState: SeatState;
 };
 
@@ -12,8 +16,16 @@ export enum SeatState {
   SOLD = "sold",
 }
 
-export const Seat = ({ i, seatState }: SeatProps) => {
-  const color =
+export const Seat = ({ row, i, seatState }: SeatProps) => {
+  const { reservation, addReservation, removeReservation } =
+    useReservationContext();
+
+  const [ticket, setTicket] = useState<Ticket | null>(() => {
+    const r = reservation.find(r => r.row === row && r.seat === i);
+    return r?.ticket || null;
+  });
+
+  const initColor =
     seatState === SeatState.FREE
       ? "#00ee00"
       : seatState === SeatState.RESERVED
@@ -22,13 +34,17 @@ export const Seat = ({ i, seatState }: SeatProps) => {
 
   const isClickable = seatState === SeatState.FREE;
 
+  const isSelected = ticket !== null;
+
+  const seatColor = isSelected ? "white" : initColor;
+
   const HandlerElement = (
     <Flex
       w={SEAT_SIZE}
       h={SEAT_SIZE}
       mx={SEAT_SPACE}
       my={ROW_SPACE}
-      bg={color}
+      bg={seatColor}
       align={"center"}
       justify={"center"}
       style={{
@@ -39,24 +55,45 @@ export const Seat = ({ i, seatState }: SeatProps) => {
     </Flex>
   );
 
+  const addReservationHandler = (ticket: Ticket) => {
+    setTicket(ticket);
+    addReservation(row, i, ticket);
+  };
+
+  const removeReservationHandler = () => {
+    setTicket(null);
+    removeReservation(row, i);
+  };
+
   return (
     <Menu shadow='md' width={200}>
       {isClickable ? (
-        <Menu.Target>
-          <UnstyledButton>{HandlerElement}</UnstyledButton>
-        </Menu.Target>
+        ticket ? (
+          <Tooltip label={ticket?.type}>
+            <Menu.Target>
+              <UnstyledButton>{HandlerElement}</UnstyledButton>
+            </Menu.Target>
+          </Tooltip>
+        ) : (
+          <Menu.Target>
+            <UnstyledButton>{HandlerElement}</UnstyledButton>
+          </Menu.Target>
+        )
       ) : (
         HandlerElement
       )}
 
       <Menu.Dropdown>
         <Menu.Label>Bilety</Menu.Label>
-        <Menu.Item>Normalny</Menu.Item>
-        <Menu.Item>Senior -70%</Menu.Item>
-        <Menu.Item>Student -51%</Menu.Item>
-        <Menu.Item>Uczeń -30%</Menu.Item>
+        {tickets.map(t => {
+          return (
+            <Menu.Item onClick={() => addReservationHandler(t)}>
+              {t.type} - {`${t.price} zł`}
+            </Menu.Item>
+          );
+        })}
         <Menu.Divider></Menu.Divider>
-        <Menu.Item>Anuluj</Menu.Item>
+        <Menu.Item onClick={removeReservationHandler}>Anuluj</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
