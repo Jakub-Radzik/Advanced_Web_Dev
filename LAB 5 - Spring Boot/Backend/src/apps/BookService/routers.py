@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_limiter.depends import RateLimiter
 from src.apps.BookService.models import Book
 from src.apps.BookService.schemas import Book_Pydantic, BookIn, BookUpdate, BookDelete
+from src.apps.Author.models import Author
 
 router = APIRouter()
 
@@ -48,7 +49,10 @@ async def get_book(id: int) -> Book_Pydantic:
     dependencies=[Depends(RateLimiter(times=1, seconds=2))],
 )
 async def add_book(book: BookIn) -> Book_Pydantic:
-    book_obj = await Book.create(**book.dict(exclude_unset=True))
+    author = await Author.get(id=book.author)
+    book_obj = await Book.create(
+        title=book.title, author=author, pages=book.pages, is_borrowed=False
+    )
     return await Book_Pydantic.from_tortoise_orm(book_obj)
 
 
@@ -59,13 +63,15 @@ async def add_book(book: BookIn) -> Book_Pydantic:
 )
 async def update_book(book: BookUpdate) -> Book_Pydantic:
     update_obj = await Book.filter(id=book.id).update(
-        **book.dict(exclude_unset=True, exclude={"id"})
+        **book.dict(exclude_unset=True, exclude={"id", "author"})
     )
     if not update_obj:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Book with id {book.id} not found",
         )
+    new_author = await Author.get(id=book.author)
+    await Book.filter(id=book.id).update(author=new_author)
     return await Book_Pydantic.from_queryset_single(Book.get(id=book.id))
 
 
