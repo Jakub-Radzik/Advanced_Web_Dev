@@ -15,6 +15,7 @@
     "@types/node": "^16.18.21",
     "@types/react": "^18.0.30",
     "@types/react-dom": "^18.0.11",
+    "miragejs": "^0.1.47",
     "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -48,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
   }
 }
