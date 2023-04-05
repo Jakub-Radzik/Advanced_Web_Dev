@@ -6,6 +6,7 @@ import { Cinema } from "../cinema";
 import { useReservationContext } from "../state";
 import { Confirmation } from "./components/confirmation";
 import { MovieSelection } from "./components/movieSelection";
+import { ClientConfirmation } from "./components/clientConfirmation";
 
 export const ReservationFlow = () => {
   const [active, setActive] = useState(0);
@@ -30,7 +31,7 @@ export const ReservationFlow = () => {
   };
 
   const handleStepChange = (nextStep: number) => {
-    const isOutOfBounds = nextStep > 3 || nextStep < 0;
+    const isOutOfBounds = nextStep > 4 || nextStep < 0;
 
     if (isOutOfBounds) {
       return;
@@ -82,7 +83,7 @@ export const ReservationFlow = () => {
         </Stepper.Step>
 
         <Stepper.Step label='Dane osobowe' description='Podaj dane kupującego'>
-          <Box>Step 3 content: Get full access</Box>
+          <ClientConfirmation onSubmitCallback={() => handleStepChange(4)} />
         </Stepper.Step>
 
         <Stepper.Completed>

@@ -22,9 +22,9 @@ export const Seat = ({ row, i, seatState }: SeatProps) => {
 
   const initColor =
     seatState === SeatState.FREE
-      ? "#00ee00"
+      ? "#00ff00"
       : seatState === SeatState.RESERVED
-      ? "cyan"
+      ? "#b7adb9"
       : "#ff0000";
 
   const isClickable = seatState === SeatState.FREE;
