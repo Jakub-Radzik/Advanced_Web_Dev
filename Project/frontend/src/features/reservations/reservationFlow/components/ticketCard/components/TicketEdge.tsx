@@ -3,16 +3,16 @@ import { TicketEdgeType } from "../types";
 import { Box } from "@mantine/core";
 
 const commonStyles: CSSProperties = {
-    position: "absolute",
-    border: "2px solid transparent",
-    background: "#f8f9fa",
-    width: 20,
-    height: 20,
-  };
+  position: "absolute",
+  border: "2px solid transparent",
+  background: "#f8f9fa",
+  width: 20,
+  height: 20,
+};
 
 type TicketEdgeProps = {
-    type: TicketEdgeType;
-}
+  type: TicketEdgeType;
+};
 
 export const TicketEdge = ({ type }: TicketEdgeProps) => {
   const uniqueStyles: Record<TicketEdgeType, CSSProperties> = {

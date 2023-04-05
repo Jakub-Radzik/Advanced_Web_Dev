@@ -1,8 +1,9 @@
-import { Box, Flex, Text } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { SEAT_SIZE, SEAT_SPACE } from "../../../constants";
 import { Screen } from "./components/screen";
-import { Seat, SeatState } from "./components/seat";
+import { Seat } from "./components/seat";
 import { Space } from "./components/space";
+import { SeatState } from "./components/seat/types";
 
 const kino = {
   name: "Sala 1",

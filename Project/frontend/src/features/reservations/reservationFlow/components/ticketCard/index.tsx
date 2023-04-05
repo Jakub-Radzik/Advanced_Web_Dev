@@ -3,6 +3,7 @@ import { SelectedPlace } from "../../../state/mocks";
 import { TicketColors, TicketEdgeType } from "./types";
 import { TicketTextRow } from "./components/TicketTextRow";
 import { TicketEdge } from "./components/TicketEdge";
+import { APP_NAME } from "../../../../../constants";
 
 type TicketCardProps = {
   place: SelectedPlace;
@@ -20,8 +21,12 @@ export const TicketCard = ({ place }: TicketCardProps) => {
       >
         <Flex w={220} direction={"column"}>
           <Center>
-            <Title order={2} ff={"Brush Script MT"} c={TicketColors.fontPrimary}>
-              Bilet - Kino 'nazwa'
+            <Title
+              order={2}
+              ff={"Brush Script MT"}
+              c={TicketColors.fontPrimary}
+            >
+              Bilet - {APP_NAME}
             </Title>
           </Center>
 
@@ -45,7 +50,12 @@ export const TicketCard = ({ place }: TicketCardProps) => {
           align={"center"}
           justify={"center"}
         >
-          <Text size={30} ff={"Courier New"} fw={"bold"} c={TicketColors.fontSecondary}>
+          <Text
+            size={30}
+            ff={"Courier New"}
+            fw={"bold"}
+            c={TicketColors.fontSecondary}
+          >
             {place.ticket.price} zł
           </Text>
         </Flex>
@@ -57,5 +67,3 @@ export const TicketCard = ({ place }: TicketCardProps) => {
     </Box>
   );
 };
-
-

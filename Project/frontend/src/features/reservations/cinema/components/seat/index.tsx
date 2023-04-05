@@ -1,20 +1,15 @@
-import { Box, Flex, Menu, Text, Tooltip, UnstyledButton } from "@mantine/core";
+import { Flex, Menu, Text, Tooltip, UnstyledButton } from "@mantine/core";
 import { useState } from "react";
 import { ROW_SPACE, SEAT_SIZE, SEAT_SPACE } from "../../../../../constants";
 import { useReservationContext } from "../../../state";
 import { Ticket, tickets } from "../../../state/mocks";
+import { SeatState } from "./types";
 
 type SeatProps = {
   i: number;
   row: number;
   seatState: SeatState;
 };
-
-export enum SeatState {
-  FREE = "free",
-  RESERVED = "reserved",
-  SOLD = "sold",
-}
 
 export const Seat = ({ row, i, seatState }: SeatProps) => {
   const { reservation, addReservation, removeReservation } =
