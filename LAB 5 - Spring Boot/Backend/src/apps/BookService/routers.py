@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_limiter.depends import RateLimiter
 from src.apps.BookService.models import Book
-from src.apps.BookService.schemas import Book_Pydantic, BookIn, BookUpdate, BookDelete
+from src.apps.BookService.schemas import Book_Pydantic, BookIn, BookUpdate, BookDelete, BookBorrow, BookReturn
 from src.apps.Author.models import Author
 
 router = APIRouter()
@@ -95,14 +95,14 @@ async def delete_book(book: BookDelete) -> dict:
     response_model=Book_Pydantic,
     dependencies=[Depends(RateLimiter(times=1, seconds=2))],
 )
-async def borrow_book(id: int) -> Book_Pydantic:
-    if await Book.filter(id=id, is_borrowed=True).exists():
+async def borrow_book(request: BookBorrow) -> Book_Pydantic:
+    if await Book.filter(id=request.id, is_borrowed=True).exists():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Book with id {id} is already borrowed",
+            detail=f"Book with id {request.id} is already borrowed",
         )
-    await Book.filter(id=id).update(is_borrowed=True)
-    return await Book_Pydantic.from_queryset_single(Book.get(id=id))
+    await Book.filter(id=request.id).update(is_borrowed=True)
+    return await Book_Pydantic.from_queryset_single(Book.get(id=request.id))
 
 
 @router.put(
@@ -110,11 +110,11 @@ async def borrow_book(id: int) -> Book_Pydantic:
     response_model=Book_Pydantic,
     dependencies=[Depends(RateLimiter(times=1, seconds=2))],
 )
-async def return_book(id: int) -> Book_Pydantic:
-    if not await Book.filter(id=id, is_borrowed=True).exists():
+async def return_book(request: BookReturn) -> Book_Pydantic:
+    if not await Book.filter(id=request.id, is_borrowed=True).exists():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Book with id {id} is not borrowed",
+            detail=f"Book with id {request.id} is not borrowed",
         )
-    await Book.filter(id=id).update(is_borrowed=False)
-    return await Book_Pydantic.from_queryset_single(Book.get(id=id))
+    await Book.filter(id=request.id).update(is_borrowed=False)
+    return await Book_Pydantic.from_queryset_single(Book.get(id=request.id))

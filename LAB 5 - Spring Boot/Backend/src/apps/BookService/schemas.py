@@ -24,3 +24,11 @@ class BookUpdate(BaseModel):
 
 class BookDelete(BaseModel):
     id: int
+
+
+class BookBorrow(BaseModel):
+    id: int
+
+
+class BookReturn(BaseModel):
+    id: int

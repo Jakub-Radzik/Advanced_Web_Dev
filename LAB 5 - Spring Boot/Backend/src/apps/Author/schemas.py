@@ -15,7 +15,6 @@ class AuthorIn(BaseModel):
 
 
 class AuthorUpdate(BaseModel):
-    id: int
     name: str
     surname: str
 
