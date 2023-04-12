@@ -1,13 +1,17 @@
 import { Box, Button, Group, Stepper } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useParams } from "react-router-dom";
 import { Show } from "../../../types/show";
 import { Cinema } from "../cinema";
+import { useReservationContext } from "../state";
+import { Confirmation } from "./components/confirmation";
 import { MovieSelection } from "./components/movieSelection";
+import { ClientConfirmation } from "./components/clientConfirmation";
 
 export const ReservationFlow = () => {
   const [active, setActive] = useState(0);
   const [, setHighestStepVisited] = useState(active);
+  const { reservation } = useReservationContext();
 
   // let { showId } = useParams();
 
@@ -27,7 +31,7 @@ export const ReservationFlow = () => {
   };
 
   const handleStepChange = (nextStep: number) => {
-    const isOutOfBounds = nextStep > 3 || nextStep < 0;
+    const isOutOfBounds = nextStep > 4 || nextStep < 0;
 
     if (isOutOfBounds) {
       return;
@@ -36,6 +40,16 @@ export const ReservationFlow = () => {
     setActive(nextStep);
     setHighestStepVisited(hSC => Math.max(hSC, nextStep));
   };
+
+  const [disabled, setDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (active == 1 && !reservation.length) {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+  }, [active, reservation]);
 
   return (
     <>
@@ -63,12 +77,13 @@ export const ReservationFlow = () => {
         <Stepper.Step
           label='Potwierdzenie rezerwacji'
           description='Potwierdź miejsca i bilety'
+          allowStepSelect={!!reservation.length}
         >
-          <Box>Step 3 content: Get full access</Box>
+          <Confirmation />
         </Stepper.Step>
 
         <Stepper.Step label='Dane osobowe' description='Podaj dane kupującego'>
-          <Box>Step 3 content: Get full access</Box>
+          <ClientConfirmation onSubmitCallback={() => handleStepChange(4)} />
         </Stepper.Step>
 
         <Stepper.Completed>
@@ -80,7 +95,12 @@ export const ReservationFlow = () => {
         <Button variant='default' onClick={() => handleStepChange(active - 1)}>
           Back
         </Button>
-        <Button onClick={() => handleStepChange(active + 1)}>Next step</Button>
+        <Button
+          disabled={disabled}
+          onClick={() => handleStepChange(active + 1)}
+        >
+          Next step
+        </Button>
       </Group>
     </>
   );
