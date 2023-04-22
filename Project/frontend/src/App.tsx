@@ -4,6 +4,8 @@ import { Header } from "./layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Repertoire } from "./pages/repertoire";
 import { Reservation } from "./pages/reservation";
+import { Admin } from "./pages/admin";
+import { Login } from "./pages/login";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Repertoire />} />
           <Route path='/reservate/:showId' element={<Reservation />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/admin' element={<Admin />} />
         </Routes>
       </AppShell>
     </BrowserRouter>

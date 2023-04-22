@@ -44,7 +44,7 @@ export const ReservationFlow = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (active == 1 && !reservation.length) {
+    if (active === 1 && !reservation.length) {
       setDisabled(true);
       return;
     }

@@ -1,11 +1,8 @@
 import {
-  Badge,
-  Box,
   Button,
   Flex,
   Image,
   Paper,
-  Rating,
   ScrollArea,
   Text,
 } from "@mantine/core";
