@@ -16,6 +16,7 @@ npm start
 
 ## Rules of development
 
+### Gitflow:
 - Create a branch from current **main** branch
 - Write a feature
 - push changes to repository
