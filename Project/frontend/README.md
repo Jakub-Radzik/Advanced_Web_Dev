@@ -17,8 +17,13 @@ npm start
 ## Rules of development
 
 ### Gitflow:
+
 - Create a branch from current **main** branch
 - Write a feature
 - push changes to repository
 - create pull request to **main** branch
 - write to Jakub Radzik to check changes
+
+### New packages:
+
+Before every package installation please use node version from .nvmrc
