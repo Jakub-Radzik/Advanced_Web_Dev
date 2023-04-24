@@ -1,7 +1,6 @@
-import { Movie } from "../movie"
+import { Movie, Screening } from "../movie"
 
 export type Show = {
-    movie: Movie
-    date: string
-    time: string
+    movie: Movie,
+    screening: Screening
 }

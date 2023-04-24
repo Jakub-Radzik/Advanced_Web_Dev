@@ -1,34 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Group, Stepper } from "@mantine/core";
 import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
 import { Show } from "../../../types/show";
 import { Cinema } from "../cinema";
 import { useReservationContext } from "../state";
 import { Confirmation } from "./components/confirmation";
 import { MovieSelection } from "./components/movieSelection";
 import { ClientConfirmation } from "./components/clientConfirmation";
+import { useScreenings } from "../../../hooks/useScreenings";
+import { useParams } from "react-router-dom";
 
 export const ReservationFlow = () => {
   const [active, setActive] = useState(0);
   const [, setHighestStepVisited] = useState(active);
   const { reservation } = useReservationContext();
+  let { showId } = useParams();
+  const [show, setShow] = useState<Show | null>(null);
 
-  // let { showId } = useParams();
+  const { getScreening } = useScreenings();
 
-  const show: Show = {
-    movie: {
-      title: "The Shawshank Redemption",
-      year: "1994",
-      director: "Frank Darabont",
-      img: "https://shatpod.com/movies/wp-content/uploads/2017/03/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
-      duration: "2h 22min",
-      genre: ["Crime", "Drama"],
-      rate: 9.3,
-      cinemaScreenings: [],
-    },
-    date: "2021-05-01",
-    time: "20:00",
-  };
+  useEffect(() => {
+    if (showId) {
+      getScreening(showId).then(data => setShow(data.show));
+    }
+  }, [showId]);
 
   const handleStepChange = (nextStep: number) => {
     const isOutOfBounds = nextStep > 4 || nextStep < 0;
@@ -64,7 +59,7 @@ export const ReservationFlow = () => {
           description='Potwierdź wybrany film'
           allowStepSelect={false}
         >
-          <MovieSelection show={show} />
+          {show ? <MovieSelection show={show} /> : <Box>Ładowanie...</Box>}
         </Stepper.Step>
 
         <Stepper.Step

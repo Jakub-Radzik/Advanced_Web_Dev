@@ -1,6 +1,8 @@
 import { Badge, Box, Button, Divider, Drawer, Rating } from "@mantine/core";
-import { Movie } from "../../types/movie";
+import { Movie, Screenings } from "../../types/movie";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useScreenings } from "../../hooks/useScreenings";
 
 type DetailsDrawerProps = {
   opened: boolean;
@@ -13,25 +15,36 @@ export const DetailsDrawer = ({
   movie,
   onClose,
 }: DetailsDrawerProps) => {
+  const [screenings, setScreenings] = useState<Screenings>([]);
+  const { getMovieScreenings } = useScreenings();
+
+  useEffect(() => {
+    if (movie) {
+      getMovieScreenings(movie?.id).then(data =>
+        setScreenings(data.screenings)
+      );
+    }
+  }, [getMovieScreenings, movie]);
+
   return movie ? (
     <Drawer opened={opened} onClose={onClose} position={"right"}>
       <h2>{movie.title}</h2>
       <Rating value={movie.rate} count={10} />
       <p>{movie.director}</p>
       <p>{movie.duration}</p>
-      {movie.genre.map(genre => (
-        <Badge color={"dark"} size={"md"} mr='xs'>
+      {movie.genre.map((genre, idx) => (
+        <Badge color={"dark"} size={"md"} mr='xs' key={idx}>
           {genre}
         </Badge>
       ))}
       <Divider my={"xs"} />
       <Box>
         <h3>Seanse</h3>
-        {movie.cinemaScreenings.map(seans => (
-          <Box>
+        {screenings.map((seans, idx) => (
+          <Box key={idx}>
             <p>{seans.date}</p>
-            {seans.times.map(time => (
-              <Link to='/reservate/1'>
+            {seans.times.map(({time, id}, idx) => (
+              <Link to={`/reservate/${id}`} key={idx}>
                 <Button radius={"xl"} mr={"xs"} mb={"xs"} color={"dark"}>
                   {time}
                 </Button>

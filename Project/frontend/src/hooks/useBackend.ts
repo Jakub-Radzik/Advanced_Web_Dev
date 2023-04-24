@@ -1,5 +1,6 @@
 import { createServer } from "miragejs";
-import { Movie } from "../types/movie";
+import { Movie, Screening, Screenings } from "../types/movie";
+import { Show } from "../types/show";
 
 export const useBackend = () => {
   return {};
@@ -10,16 +11,18 @@ createServer({
     this.urlPrefix = "http://localhost:5000/api/v1";
 
     this.get("/movies/:movieId", () => {
-      return {movie: {
-        id: 1,
-        title: "The Shawshank Redemption",
-        year: "1994",
-        director: "Frank Darabont",
-        img: "https://shatpod.com/movies/wp-content/uploads/2017/03/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
-        duration: "2h 22min",
-        genre: ["Crime", "Drama"],
-        rate: 9.3,
-      }};
+      return {
+        movie: {
+          id: 1,
+          title: "The Shawshank Redemption",
+          year: "1994",
+          director: "Frank Darabont",
+          img: "https://shatpod.com/movies/wp-content/uploads/2017/03/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
+          duration: "2h 22min",
+          genre: ["Crime", "Drama"],
+          rate: 9.3,
+        },
+      };
     });
 
     this.get("/movies", () => {
@@ -67,34 +70,96 @@ createServer({
       ];
 
       return {
-        movies: movies
+        movies: movies,
       };
     });
 
     this.get("/screenings/:movieId", () => {
-        const seanse = [
+      const seanse: Screenings = [
+        {
+          date: "2021-10-10",
+          times: [
             {
-              date: "2021-10-10",
-              times: ["12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+              id: 1,
+              time: "12:00",
             },
             {
-              date: "2021-10-11",
-              times: ["12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+              id: 2,
+              time: "14:00",
             },
             {
-              date: "2021-10-12",
-              times: ["12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+              id: 3,
+              time: "16:00",
             },
-          ];
+            {
+              id: 4,
+              time: "18:00",
+            },
+            {
+              id: 5,
+              time: "20:00",
+            },
+          ],
+        },
+        {
+          date: "2021-10-11",
+          times: [
+            {
+              id: 6,
+              time: "12:00",
+            },
+            {
+              id: 7,
+              time: "14:00",
+            },
+            {
+              id: 8,
+              time: "16:00",
+            },
+            {
+              id: 9,
+              time: "18:00",
+            },
+            {
+              id: 11,
+              time: "20:00",
+            },
+          ],
+        },
+        {
+          date: "2021-10-12",
+          times: [
+            {
+              id: 22,
+              time: "12:00",
+            },
+            {
+              id: 223,
+              time: "14:00",
+            },
+            {
+              id: 31,
+              time: "16:00",
+            },
+            {
+              id: 42,
+              time: "18:00",
+            },
+            {
+              id: 545,
+              time: "20:00",
+            },
+          ],
+        },
+      ];
 
-          return {
-            screenings: seanse,
-          }
+      return {
+        screenings: seanse,
+      };
     });
 
     this.get("/screening/:screeningId", () => {
-      return {
-        show: {
+      const show: Show = {
           movie: {
             id: 1,
             title: "The Shawshank Redemption",
@@ -105,10 +170,15 @@ createServer({
             genre: ["Crime", "Drama"],
             rate: 9.3,
           },
-          date: "2021-05-01",
-          time: "20:00",
-        }
-      }
+          screening: {
+            id: 1,
+            date: "2021-05-01",
+            time: "20:00",
+          }
+        };
+      return {
+        show: show
+      };
     });
   },
 });

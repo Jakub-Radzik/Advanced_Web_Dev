@@ -1,4 +1,5 @@
 export type Movie = {
+    id: number,
     title: string,
     year: string,
     img: string,
@@ -6,10 +7,18 @@ export type Movie = {
     duration: string,
     genre: string[],
     rate: number,
-    cinemaScreenings: CinemaScreening[]
 }
 
-export type CinemaScreening = {
+export type Screenings = {
     date: string,
-    times: string[],
+    times: {
+        id: number,
+        time: string,
+    }[],
+}[];
+
+export type Screening = {
+    id: number,
+    date: string,
+    time: string,
 }
