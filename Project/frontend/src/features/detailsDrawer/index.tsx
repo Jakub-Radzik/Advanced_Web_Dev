@@ -43,7 +43,7 @@ export const DetailsDrawer = ({
         {screenings.map((seans, idx) => (
           <Box key={idx}>
             <p>{seans.date}</p>
-            {seans.times.map(({time, id}, idx) => (
+            {seans.times.map(({ time, id }, idx) => (
               <Link to={`/reservate/${id}`} key={idx}>
                 <Button radius={"xl"} mr={"xs"} mb={"xs"} color={"dark"}>
                   {time}

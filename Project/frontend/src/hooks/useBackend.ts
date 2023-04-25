@@ -160,24 +160,53 @@ createServer({
 
     this.get("/screening/:screeningId", () => {
       const show: Show = {
-          movie: {
-            id: 1,
-            title: "The Shawshank Redemption",
-            year: "1994",
-            director: "Frank Darabont",
-            img: "https://shatpod.com/movies/wp-content/uploads/2017/03/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
-            duration: "2h 22min",
-            genre: ["Crime", "Drama"],
-            rate: 9.3,
+        movie: {
+          id: 1,
+          title: "The Shawshank Redemption",
+          year: "1994",
+          director: "Frank Darabont",
+          img: "https://shatpod.com/movies/wp-content/uploads/2017/03/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
+          duration: "2h 22min",
+          genre: ["Crime", "Drama"],
+          rate: 9.3,
+        },
+        screening: {
+          id: 1,
+          date: "2021-05-01",
+          time: "20:00",
+        },
+        soldSeats: [
+          {
+            row: 3,
+            seat: 3,
           },
-          screening: {
-            id: 1,
-            date: "2021-05-01",
-            time: "20:00",
-          }
-        };
+          {
+            row: 3,
+            seat: 4,
+          },
+          {
+            row: 3,
+            seat: 5,
+          },
+        ],
+        room: {
+          name: "Sala 1",
+          rows: 5,
+          seats: 11,
+          isIMAX: false,
+          aligment: "left",
+          screenWidth: 15,
+          matrix: [
+            [1, 1, 1, 1, 1, 1, 1, null, null, null],
+            [1, 1, 1, 1, 1, 1, 1, null, null, null],
+            [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
+          ],
+        },
+      };
       return {
-        show: show
+        show: show,
       };
     });
   },

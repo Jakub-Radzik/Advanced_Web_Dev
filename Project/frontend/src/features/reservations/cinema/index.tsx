@@ -1,93 +1,59 @@
-import { Flex, Text } from "@mantine/core";
+import { Flex, Text, Box } from "@mantine/core";
 import { SEAT_SIZE, SEAT_SPACE } from "../../../constants";
 import { Screen } from "./components/screen";
 import { Seat } from "./components/seat";
 import { Space } from "./components/space";
 import { SeatState } from "./components/seat/types";
+import { Room, SoldSeat } from "../../../types/show";
 
-const kino = {
-  name: "Sala 1",
-  rows: 5,
-  seats: 11,
-  isIMAX: false,
-  aligment: "left",
-  screenWidth: 15,
-  matrix: [
-    [1, 1, 1, 1, 1, 1, 1, null, null, null],
-    [1, 1, 1, 1, 1, 1, 1, null, null, null],
-    [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, null, 1, 1, 1],
-  ],
+type CinemaProps = {
+  soldSeats?: SoldSeat[];
+  room: Room;
 };
 
-const stateSiedzenia = {
-  reserved: [
-    {
-      row: 1,
-      seat: 1,
-    },
-    {
-      row: 2,
-      seat: 2,
-    },
-  ],
-  sold: [
-    {
-      row: 3,
-      seat: 3,
-    },
-    {
-      row: 3,
-      seat: 4,
-    },
-    {
-      row: 3,
-      seat: 5,
-    },
-  ],
-};
-
-export const Cinema = () => {
+export const Cinema = ({ soldSeats, room }: CinemaProps) => {
   const getSeatState = (row: number, seat: number) => {
-    const reserved = stateSiedzenia.reserved.find(
-      siedzenie => siedzenie.row === row && siedzenie.seat === seat
-    );
-    const sold = stateSiedzenia.sold.find(
-      siedzenie => siedzenie.row === row && siedzenie.seat === seat
-    );
-    if (reserved) {
-      return SeatState.RESERVED;
-    }
-    if (sold) {
-      return SeatState.SOLD;
+    if (soldSeats) {
+      const sold = soldSeats.find(
+        siedzenie => siedzenie.row === row && siedzenie.seat === seat
+      );
+      if (sold) {
+        return SeatState.SOLD;
+      }
     }
     return SeatState.FREE;
   };
 
   return (
     <Flex bg={"#dbd9d9"} p={"md"} direction={"column"} align={"center"}>
-      <Text>{kino.name}</Text>
-      <Screen seatWidth={kino.screenWidth} justify={"center"} />
+      <Text>{room.name}</Text>
+      <Screen
+        seatWidth={room.screenWidth}
+        justify={"center"}
+        isIMAX={room.isIMAX}
+      />
       <Flex
         direction={"column"}
         justify={"center"}
         align={"center"}
-        w={SEAT_SIZE * kino.screenWidth}
+        w={SEAT_SIZE * room.screenWidth}
       >
-        {kino.matrix.map((row, rowIndex) => {
+        {room.matrix.map((row, rowIndex) => {
           return (
             <Flex
               align={"flex-start"}
-              w={(SEAT_SIZE + SEAT_SPACE * 4) * kino.seats}
+              w={(SEAT_SIZE + SEAT_SPACE * 4) * room.seats}
+              my={room.isIMAX ? SEAT_SPACE * 5 : undefined}
             >
               {row.map((seat, seatIndex) => {
                 return seat ? (
-                  <Seat
-                    row={rowIndex + 1}
-                    i={seatIndex + 1}
-                    seatState={getSeatState(rowIndex + 1, seatIndex + 1)}
-                  />
+                  <Box mt={room.isIMAX ? -Math.abs(room.rows - seatIndex) : 0}>
+                    <Seat
+                      row={rowIndex + 1}
+                      i={seatIndex + 1}
+                      seatState={getSeatState(rowIndex + 1, seatIndex + 1)}
+                    />
+                  </Box>
                 ) : (
                   <Space />
                 );

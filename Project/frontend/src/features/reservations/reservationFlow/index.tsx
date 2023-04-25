@@ -66,7 +66,11 @@ export const ReservationFlow = () => {
           label='Wybór miejsc'
           description='Wybierz miejsca i bilety'
         >
-          <Cinema />
+          {show ? (
+            <Cinema soldSeats={show.soldSeats} room={show.room} />
+          ) : (
+            <Box>Ładowanie...</Box>
+          )}
         </Stepper.Step>
 
         <Stepper.Step
