@@ -80,10 +80,10 @@ export const Seat = ({ row, i, seatState }: SeatProps) => {
 
       <Menu.Dropdown>
         <Menu.Label>Bilety</Menu.Label>
-        {tickets.map(t => {
+        {tickets.map((ticket, idx) => {
           return (
-            <Menu.Item onClick={() => addReservationHandler(t)}>
-              {t.type} - {`${t.price} zł`}
+            <Menu.Item key={idx} onClick={() => addReservationHandler(ticket)}>
+              {ticket.type} - {`${ticket.price} zł`}
             </Menu.Item>
           );
         })}
