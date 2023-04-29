@@ -1,50 +1,16 @@
-import {
-  Box,
-  Button,
-  Center,
-  Checkbox,
-  Flex,
-  Group,
-  TextInput,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Box, Center, Checkbox, Flex, TextInput } from "@mantine/core";
+import { UseFormReturnType } from "@mantine/form";
+import { ClientForm } from "../../../../../types/forms";
 
 type ClientConfirmationProps = {
-  onSubmitCallback: () => void;
+  form: UseFormReturnType<ClientForm, (values: ClientForm) => ClientForm>;
 };
 
-export const ClientConfirmation = ({
-  onSubmitCallback,
-}: ClientConfirmationProps) => {
-  const form = useForm({
-    initialValues: {
-      email: "",
-      termsOfService: false,
-      phone: "",
-      firstName: "",
-      lastName: "",
-    },
-
-    validate: {
-      email: value => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      firstName: value => (value.length > 0 ? null : "First name is required"),
-      lastName: value => (value.length > 0 ? null : "Last name is required"),
-      phone: value => (value.length > 0 ? null : "Phone number is required"),
-      termsOfService: value =>
-        value ? null : "You must agree to terms of service",
-    },
-  });
-
-  const onSubmit = () => {
-    // TODO: Send data to backend
-    form.isValid() && onSubmitCallback();
-  };
-
+export const ClientConfirmation = ({ form }: ClientConfirmationProps) => {
   return (
     <Center>
-      {" "}
       <Box miw={400}>
-        <form onSubmit={onSubmit}>
+        <form>
           <Flex justify={"space-between"}>
             <TextInput
               withAsterisk
@@ -77,9 +43,6 @@ export const ClientConfirmation = ({
             label='I agree to sell my privacy'
             {...form.getInputProps("termsOfService", { type: "checkbox" })}
           />
-          <Group position='right' mt='md'>
-            <Button type='submit'>Submit</Button>
-          </Group>
         </form>
       </Box>
     </Center>
