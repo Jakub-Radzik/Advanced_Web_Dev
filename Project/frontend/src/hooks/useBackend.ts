@@ -1,5 +1,5 @@
 import { createServer } from "miragejs";
-import { Movie, Screening, Screenings } from "../types/movie";
+import { Movie, Screenings } from "../types/movie";
 import { Show } from "../types/show";
 
 export const useBackend = () => {
