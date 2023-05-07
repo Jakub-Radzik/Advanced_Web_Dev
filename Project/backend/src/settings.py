@@ -47,7 +47,12 @@ TORTOISE_ORM = {
     },
     "apps": {
         "models": {
-            "models": ["src.apps.movies.models", "src.apps.rooms.models", "aerich.models"],
+            "models": [
+                "src.apps.movies.models",
+                "src.apps.rooms.models",
+                "src.apps.sessions.models",
+                "aerich.models",
+            ],
             "default_connection": "default",
         },
     },

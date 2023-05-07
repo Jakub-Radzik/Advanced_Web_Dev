@@ -1,5 +1,3 @@
-from enum import Enum
-
 from pydantic import BaseModel
 from tortoise import Tortoise
 from tortoise.contrib.pydantic.creator import pydantic_model_creator

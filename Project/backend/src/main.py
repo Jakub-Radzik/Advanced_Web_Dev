@@ -45,7 +45,7 @@ app.include_router(rooms_router, prefix="/api/v1", tags=["rooms"])
 register_tortoise(
     app,
     db_url=f"postgres://postgres:postgres@{settings.DB_HOST}:5432/db",
-    modules={"models": ["src.apps.movies.models", "src.apps.rooms.models"]},
+    modules={"models": ["src.apps.movies.models", "src.apps.rooms.models", "src.apps.sessions.models"]},
     generate_schemas=True,
     add_exception_handlers=True,
 )

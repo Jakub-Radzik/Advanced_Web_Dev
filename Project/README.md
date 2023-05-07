@@ -11,6 +11,18 @@ Use sample.env files to create them. (rename to .env, fill and change environmen
 To use mailing service you can create free account at mailtrap
 Use username and password in .env file
 
+To initialize migration tool, run these commands:
+```bash
+docker exec [backend container name] aerich init -t src.settings.TORTOISE_ORM
+docker exec [backend container name] aerich init-db
+```
+
 When adding models in new file you should register this file in 2 places:
 - One in reqister_tortoise call in main.py
 - Second one in settings.py TORTOISE_ORM config
+
+Then you have to execute migrate and upgrade commands inside the container
+```bash
+docker exec [backend container name] aerich migrate
+docker exec [backend container name] aerich upgrade
+```
