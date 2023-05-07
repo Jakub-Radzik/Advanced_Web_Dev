@@ -1,6 +1,8 @@
 from src.settings import settings
 from fastapi import HTTPException, status
 import requests
+import httpx
+import asyncio
 from datetime import datetime
 import json
 
@@ -71,7 +73,9 @@ async def get_currently_popular_movies(language: str, page: str) -> dict[str, li
         if req.status_code == status.HTTP_200_OK:
             response = req.json()
             data = {"results": []}
-            for movie in response["results"]:
+            runtimes = await gather_movie_details(response, language)
+
+            for index, movie in enumerate(response["results"]):
                 movie_data = {
                     "id": movie["id"],
                     "title": movie["title"],
@@ -84,6 +88,7 @@ async def get_currently_popular_movies(language: str, page: str) -> dict[str, li
                     "original_language": movie["original_language"],
                     "original_title": movie["original_title"],
                     "genre_ids": list(map(str, movie["genre_ids"])),
+                    "runtime": runtimes[index],
                 }
                 data["results"].append(movie_data)
 
@@ -133,3 +138,18 @@ async def get_genres_mapping(language: str) -> dict[str, str]:
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Something went wrong. Please try again later.",
             )
+
+
+async def gather_movie_details(response: dict, language: str) -> list[int]:
+    async with httpx.AsyncClient() as client:
+        tasks = []
+        for movie in response["results"]:
+            tasks.append(
+                asyncio.ensure_future(
+                    client.get(
+                        f"{settings.THE_MOVIE_BASE_URL}/movie/{movie['id']}?api_key={settings.THE_MOVIE_DB_API_KEY}&language={language}"
+                    )
+                )
+            )
+        responses = await asyncio.gather(*tasks)
+        return list(map(lambda x: x.json()["runtime"], responses))
