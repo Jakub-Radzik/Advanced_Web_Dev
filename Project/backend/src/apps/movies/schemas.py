@@ -1,10 +1,10 @@
-from pydantic import BaseModel
 from enum import Enum
+
+from pydantic import BaseModel
 from tortoise import Tortoise
 from tortoise.contrib.pydantic.creator import pydantic_model_creator
 
 from .models import Movie
-
 
 Tortoise.init_models(["src.apps.movies.models"], "models")
 Movie_Pydantic = pydantic_model_creator(Movie, name="Movie")

@@ -1,10 +1,11 @@
-from src.settings import settings
-from fastapi import HTTPException, status
-import requests
-import httpx
 import asyncio
-from datetime import datetime
 import json
+from datetime import datetime
+
+import httpx
+import requests
+from fastapi import HTTPException, status
+from src.settings import settings
 
 
 async def get_moviedb_config() -> dict[str, str]:

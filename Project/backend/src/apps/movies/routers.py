@@ -1,16 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_limiter.depends import RateLimiter
-
-from src.apps.movies.utils import (
-    get_moviedb_config,
-    get_currently_popular_movies,
-    get_genres_mapping,
-)
-from src.apps.movies.schemas import Language, Size, size_mapping
-from src.settings import settings
-from src.apps.movies.schemas import Movie_Pydantic, Movie_Create
 from src.apps.movies.models import Movie
-
+from src.apps.movies.schemas import (Language, Movie_Create, Movie_Pydantic,
+                                     Size, size_mapping)
+from src.apps.movies.utils import (get_currently_popular_movies,
+                                   get_genres_mapping, get_moviedb_config)
 
 router = APIRouter()
 

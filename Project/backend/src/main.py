@@ -2,10 +2,10 @@ import redis.asyncio as redis
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_limiter import FastAPILimiter
-from tortoise.contrib.fastapi import register_tortoise
-
-from src.settings import settings
 from src.apps.movies.routers import router as movies_router
+from src.apps.rooms.routers import router as rooms_router
+from src.settings import settings
+from tortoise.contrib.fastapi import register_tortoise
 
 app = FastAPI()
 
@@ -39,12 +39,13 @@ app.add_middleware(
 )
 
 app.include_router(movies_router, prefix="/api/v1", tags=["movies"])
+app.include_router(rooms_router, prefix="/api/v1", tags=["rooms"])
 
 
 register_tortoise(
     app,
     db_url=f"postgres://postgres:postgres@{settings.DB_HOST}:5432/db",
-    modules={"models": ["src.apps.movies.models"]},
+    modules={"models": ["src.apps.movies.models", "src.apps.rooms.models"]},
     generate_schemas=True,
     add_exception_handlers=True,
 )
