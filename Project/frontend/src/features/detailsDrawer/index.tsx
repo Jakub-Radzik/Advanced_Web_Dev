@@ -40,11 +40,11 @@ export const DetailsDrawer = ({
       <Divider my={"xs"} />
       <Box>
         <h3>Seanse</h3>
-        {screenings.map((seans, idx) => (
-          <Box key={idx}>
+        {screenings.map((seans, screeningIdx) => (
+          <Box key={screeningIdx}>
             <p>{seans.date}</p>
-            {seans.times.map(({ time, id }, idx) => (
-              <Link to={`/reservate/${id}`} key={idx}>
+            {seans.times.map(({ time, id }, seansIdx) => (
+              <Link to={`/reservate/${id}`} key={seansIdx}>
                 <Button radius={"xl"} mr={"xs"} mb={"xs"} color={"dark"}>
                   {time}
                 </Button>

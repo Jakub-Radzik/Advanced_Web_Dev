@@ -1,20 +1,38 @@
 import { createContext, useContext, useState } from "react";
 import { SelectedPlace, Ticket } from "./mocks";
+import { ClientForm } from "../../../types/forms";
+
+type ClientData = Omit<ClientForm, "termsOfService">;
 
 type ReservationContextValue = {
   reservation: SelectedPlace[];
   addReservation: (row: number, seat: number, ticket: Ticket) => void;
   removeReservation: (row: number, seat: number) => void;
+  clientData: ClientData;
+  setClientData: (values: ClientData) => void;
 };
 
 const ReservationContext = createContext<ReservationContextValue>({
   reservation: [],
   addReservation: () => {},
   removeReservation: () => {},
+  clientData: {
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+  },
+  setClientData: () => {},
 });
 
 function ReservationProvider({ children }: { children: React.ReactNode }) {
   const [reservation, setReservation] = useState<SelectedPlace[]>([]);
+  const [clientData, setClientData] = useState<ClientData>({
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+  });
 
   const addReservation = (row: number, seat: number, ticket: Ticket) => {
     const existingReservation = reservation.findIndex(
@@ -47,6 +65,8 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
         reservation,
         addReservation,
         removeReservation,
+        clientData,
+        setClientData: values => setClientData(values),
       }}
     >
       {children}

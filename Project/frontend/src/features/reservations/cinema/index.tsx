@@ -47,7 +47,7 @@ export const Cinema = ({ soldSeats, room }: CinemaProps) => {
             >
               {row.map((seat, seatIndex) => {
                 return seat ? (
-                  <Box mt={room.isIMAX ? -Math.abs(room.rows - seatIndex) : 0}>
+                  <Box key={seatIndex} mt={room.isIMAX ? -Math.abs(room.rows - seatIndex) : 0}>
                     <Seat
                       row={rowIndex + 1}
                       i={seatIndex + 1}

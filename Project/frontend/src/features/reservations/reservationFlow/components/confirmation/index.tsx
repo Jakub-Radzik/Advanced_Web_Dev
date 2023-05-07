@@ -15,8 +15,8 @@ export const Confirmation = () => {
   return (
     <ScrollArea type={"always"}>
       <Flex p='xs'>
-        {reservation.sort(ticketSorter).map(r => (
-          <TicketCard place={r} />
+        {reservation.sort(ticketSorter).map((reservation, idx) => (
+          <TicketCard place={reservation} key={idx} />
         ))}
       </Flex>
     </ScrollArea>
