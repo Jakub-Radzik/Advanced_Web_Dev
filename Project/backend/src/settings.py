@@ -12,6 +12,9 @@ class CommonSettings(BaseSettings):
 
 class DatabaseSettings(BaseSettings):
     DB_HOST: str
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
 
 
 class Settings(CommonSettings, DatabaseSettings):
@@ -36,3 +39,16 @@ class Settings(CommonSettings, DatabaseSettings):
 
 
 settings = Settings()
+
+
+TORTOISE_ORM = {
+    "connections": {
+        "default": f"postgres://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.DB_HOST}:5432/{settings.POSTGRES_DB}"
+    },
+    "apps": {
+        "models": {
+            "models": ["src.apps.movies.models", "aerich.models"],
+            "default_connection": "default",
+        },
+    },
+}
