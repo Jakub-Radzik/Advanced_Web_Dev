@@ -77,12 +77,12 @@ export const ReservationFlow = () => {
     },
 
     validate: {
-      email: value => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      firstName: value => (value.length > 0 ? null : "First name is required"),
-      lastName: value => (value.length > 0 ? null : "Last name is required"),
-      phone: value => (value.length > 0 ? null : "Phone number is required"),
+      email: value => (/^\S+@\S+$/.test(value) ? null : "Niepoprawny email"),
+      firstName: value => (value.length > 0 ? null : "Imię jest wymagane"),
+      lastName: value => (value.length > 0 ? null : "Nazwisko jest wymagane"),
+      phone: value => (value.length > 0 ? null : "Numer telefonu jest wymagany"),
       termsOfService: value =>
-        value ? null : "You must agree to terms of service",
+        value ? null : "Akceptacja zgody na przetwarzanie danych osobowych jest wymagana",
     },
   });
 
@@ -126,21 +126,21 @@ export const ReservationFlow = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Box>Completed, click back button to get to previous step</Box>
+          <Box>Sukces, kliknij powrót by wrócić do poprzednich kroków</Box>
         </Stepper.Completed>
       </Stepper>
 
       <Group position='center' mt='xl'>
         {backButtonVisible && (
           <Button variant='default' onClick={handleBackButton}>
-            Back
+            Powrót
           </Button>
         )}
         <Button
           disabled={disabled}
           onClick={() => handleStepChange(active + 1)}
         >
-          Next step
+          Dalej
         </Button>
       </Group>
     </>

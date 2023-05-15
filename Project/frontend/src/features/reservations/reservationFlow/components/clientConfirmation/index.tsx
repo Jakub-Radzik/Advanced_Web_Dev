@@ -14,14 +14,14 @@ export const ClientConfirmation = ({ form }: ClientConfirmationProps) => {
           <Flex justify={"space-between"}>
             <TextInput
               withAsterisk
-              label='First name'
-              placeholder='First name'
+              label='Imię'
+              placeholder='Imię'
               {...form.getInputProps("firstName")}
             />
             <TextInput
               withAsterisk
-              label='Last name'
-              placeholder='Last name'
+              label='Nazwisko'
+              placeholder='Nazwisko'
               {...form.getInputProps("lastName")}
             />
           </Flex>
@@ -29,18 +29,18 @@ export const ClientConfirmation = ({ form }: ClientConfirmationProps) => {
           <TextInput
             withAsterisk
             label='Email'
-            placeholder='your@email.com'
+            placeholder='przykladowy@email.com'
             {...form.getInputProps("email")}
           />
           <TextInput
             withAsterisk
-            label='Phone'
-            placeholder='+1 123 456 7890'
+            label='Telefon'
+            placeholder='+48 123 456 789'
             {...form.getInputProps("phone")}
           />
           <Checkbox
             mt='md'
-            label='I agree to sell my privacy'
+            label='Wyrażam zgodę na kradzież danych osobowych'
             {...form.getInputProps("termsOfService", { type: "checkbox" })}
           />
         </form>
