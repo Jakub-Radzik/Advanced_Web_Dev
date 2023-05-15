@@ -25,7 +25,7 @@ export const Header = () => {
               <Text>Strona główna</Text>
             </UnstyledButton>
           </Link>
-          <Link to={"/admin"}>
+          <Link to={"/login"}>
             <UnstyledButton>
               <Text>Logowanie</Text>
             </UnstyledButton>

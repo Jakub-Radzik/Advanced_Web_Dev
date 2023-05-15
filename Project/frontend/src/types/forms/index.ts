@@ -5,3 +5,8 @@ export type ClientForm = {
     firstName: string,
     lastName: string,
 };
+
+export type LoginForm = {
+    username: string,
+    password: string
+}
