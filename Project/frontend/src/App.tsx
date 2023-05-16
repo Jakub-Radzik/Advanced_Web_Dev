@@ -6,6 +6,7 @@ import { Repertoire } from "./pages/repertoire";
 import { Reservation } from "./pages/reservation";
 import { Admin } from "./pages/admin";
 import { Login } from "./pages/login";
+import { NewShow } from "./pages/new_show";
 import { useBackend } from "./hooks/useBackend";
 import { useForm } from "@mantine/form";
 import { LoginForm } from "./types/forms";
@@ -43,6 +44,7 @@ function App() {
           <Route path='/reservate/:showId' element={<Reservation />} />
           <Route path='/login' element={<Login form={form} />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/new_show' element={<NewShow />} />
         </Routes>
       </AppShell>
     </BrowserRouter>

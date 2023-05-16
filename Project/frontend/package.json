@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "11.10.6",
     "@mantine/core": "6.0.5",
+    "@mantine/dates": "^6.0.11",
     "@mantine/form": "6.0.6",
     "@mantine/hooks": "6.0.5",
     "@mantine/modals": "6.0.5",
@@ -16,6 +17,7 @@
     "@types/react": "18.0.30",
     "@types/react-dom": "18.0.11",
     "axios": "1.3.6",
+    "dayjs": "^1.11.7",
     "miragejs": "0.1.47",
     "prettier": "2.8.7",
     "react": "18.2.0",
