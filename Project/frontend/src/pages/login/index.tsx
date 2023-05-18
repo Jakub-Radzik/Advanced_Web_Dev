@@ -38,9 +38,19 @@ export const Login = ({ form }: LoginProps) => {
           >
             Zaloguj się
           </Button>
+          <Button
+              variant="default"
+              onClick={() => navigate("/")}
+              
+              //style={{ marginTop: "1rem" }} //TODO forgot pass? idk if needed dawid
+            >
+            Zapomniałem hasła
+          </Button>
         </Group>
       </Box>
 
     </Center>
+
+    
   );
 };

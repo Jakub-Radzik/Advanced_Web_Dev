@@ -24,7 +24,7 @@ export const Repertoire = () => {
   return (
     <>
       <div>
-        <h1>Repertuar</h1>
+        <h1>Repertuarek</h1>
         <ScrollArea>
           <Flex>
             {movies.map((movie, idx) => (
