@@ -1,19 +1,20 @@
 import axios from "axios";
 import { Screenings } from "../types/movie";
 import { Show } from "../types/show";
+import { API_URL } from "../constants";
 
 export const useScreenings = () => {
   const getMovieScreenings = (movieId: number) =>
     axios
       .get<{ screenings: Screenings }>(
-        `http://localhost:5000/api/v1/screenings/${movieId}`
+        `${API_URL}/screenings/${movieId}`
       )
       .then(response => response.data);
 
   const getScreening = (screeningId: number | string) =>
     axios
       .get<{ show: Show }>(
-        `http://localhost:5000/api/v1/screening/${screeningId}`
+        `${API_URL}/screening/${screeningId}`
       )
       .then(response => response.data);
 
