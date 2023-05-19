@@ -11,8 +11,10 @@ import { useScreenings } from "../../../hooks/useScreenings";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { ClientForm } from "../../../types/forms";
+import { Payment } from "./components/payment";
 
 export const ReservationFlow = () => {
+  const MAX_STEP = 4;
   const [active, setActive] = useState(0);
   const [, setHighestStepVisited] = useState(active);
   const { reservation, setClientData } = useReservationContext();
@@ -30,7 +32,7 @@ export const ReservationFlow = () => {
   }, [showId]);
 
   const handleStepChange = (nextStep: number) => {
-    const isOutOfBounds = nextStep > 4 || nextStep < 0;
+    const isOutOfBounds = nextStep > MAX_STEP || nextStep < 0;
 
     if (isOutOfBounds) {
       return;
@@ -126,7 +128,7 @@ export const ReservationFlow = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Box>Completed, click back button to get to previous step</Box>
+          <Payment/>
         </Stepper.Completed>
       </Stepper>
 
