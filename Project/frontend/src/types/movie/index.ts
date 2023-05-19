@@ -1,12 +1,17 @@
 export type Movie = {
     id: number,
     title: string,
-    year: string,
-    img: string,
-    director: string,
-    duration: string,
-    genre: string[],
-    rate: number,
+    original_title: string,
+    poster_path: string,
+    backdrop_path: string,
+    overview: string,
+    release_date: string,
+    vote_average: number,
+    vote_count: number,
+    original_language: string,
+    runtime: number,
+    genres: string[],
+    // director: string,
 }
 
 export type Screenings = {

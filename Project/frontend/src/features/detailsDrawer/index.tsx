@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Divider, Drawer, Rating } from "@mantine/core";
+import { Badge, Box, Button, Divider, Drawer, Rating, Image } from "@mantine/core";
 import { Movie, Screenings } from "../../types/movie";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -28,15 +28,20 @@ export const DetailsDrawer = ({
 
   return movie ? (
     <Drawer opened={opened} onClose={onClose} position={"right"}>
+      <Image src={movie.poster_path} fit={"contain"} />
       <h2>{movie.title}</h2>
-      <Rating value={movie.rate} count={10} />
-      <p>{movie.director}</p>
-      <p>{movie.duration}</p>
-      {movie.genre.map((genre, idx) => (
-        <Badge color={"dark"} size={"md"} mr='xs' key={idx}>
+      <Rating value={movie.vote_average} count={10} />
+      {/* <p>{movie.director}</p> */}
+      <Box my={'xs'}>      {movie.genres.map((genre, idx) => (
+        <Badge color={"dark"} size={"md"} mr='xs' my={5} key={idx}>
           {genre}
         </Badge>
-      ))}
+      ))}</Box>
+
+
+      <p>{movie.overview}</p>
+      <p>Duration: {movie.runtime} min</p>
+      <p>Released: {movie.release_date}</p>
       <Divider my={"xs"} />
       <Box>
         <h3>Seanse</h3>

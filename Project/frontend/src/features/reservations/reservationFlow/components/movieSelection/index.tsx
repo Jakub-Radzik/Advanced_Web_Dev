@@ -10,22 +10,22 @@ export const MovieSelection = ({ show }: MovieSelectionProps) => {
     <Flex align={"center"} justify={"space-between"}>
       <Box>
         <Title>
-          {show.movie.title} - {show.movie.year}
+          {show.movie.title} - {show.movie.release_date}
         </Title>
-        <Title order={2}>{show.movie.director}</Title>
-        <Title order={2}>{show.movie.duration}</Title>
+        {/* <Title order={2}>{show.movie.director}</Title> */}
+        <Title order={2}>{show.movie.runtime}</Title>
 
-        {show.movie.genre.map((genre, idx) => (
+        {show.movie.genres.map((genre, idx) => (
           <Badge color={"dark"} size={"md"} mr='xs' key={idx}>
             {genre}
           </Badge>
         ))}
-        <Rating value={show.movie.rate} count={10} />
+        <Rating value={show.movie.vote_average} count={10} />
         <Title order={2}>{show.screening.date}</Title>
         <Title order={2}>{show.screening.time}</Title>
       </Box>
       <Box w={300}>
-        <Image src={show.movie.img} />
+        <Image src={show.movie.poster_path} />
       </Box>
     </Flex>
   );

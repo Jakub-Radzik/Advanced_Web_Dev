@@ -3,3 +3,5 @@ export const SEAT_SPACE = 1;
 export const ROW_SPACE = 3;
 
 export const APP_NAME = "KINO API";
+
+export const API_URL = "http://localhost:8008/api/v1"
