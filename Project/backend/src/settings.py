@@ -34,6 +34,9 @@ class Settings(CommonSettings, DatabaseSettings):
     THE_MOVIE_BASE_URL: str
     REDIS_INSTANCE: Redis = None
 
+    CLIENT_ID: str
+    CLIENT_SECRET: str
+
     class Config:
         env_file = "../.env"
 
@@ -51,6 +54,7 @@ TORTOISE_ORM = {
                 "src.apps.movies.models",
                 "src.apps.rooms.models",
                 "src.apps.sessions.models",
+                "src.apps.user.models",
                 "aerich.models",
             ],
             "default_connection": "default",

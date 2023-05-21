@@ -5,6 +5,7 @@ from src.apps.movies.schemas import (Language, Movie_Create, Movie_Pydantic,
                                      Size, size_mapping)
 from src.apps.movies.utils import (get_currently_popular_movies,
                                    get_genres_mapping, get_moviedb_config)
+from src.apps.user.auth import get_current_user
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ async def get_movies(
     language: Language = Language.ENGLISH,
     page: str = "1",
     size: Size = Size.MEDIUM,
+    _: str = Depends(get_current_user),
 ):
     """Get movies from moviedb API"""
     config = await get_moviedb_config()
@@ -64,21 +66,21 @@ async def get_stored_movie(movie_id: int):
 
 
 @router.post("/stored/movies", dependencies=[Depends(RateLimiter(times=5, seconds=1))])
-async def create_stored_movie(movie: Movie_Create):
+async def create_stored_movie(movie: Movie_Create, _: str = Depends(get_current_user)):
     """Create movie in database"""
     movie_obj = await Movie.create(**movie.dict(exclude_unset=True))
     return await Movie_Pydantic.from_tortoise_orm(movie_obj)
 
 
 @router.put("/stored/movies/{movie_id}", dependencies=[Depends(RateLimiter(times=5, seconds=1))])
-async def update_stored_movie(movie_id: int, movie: Movie_Create):
+async def update_stored_movie(movie_id: int, movie: Movie_Create, _: str = Depends(get_current_user)):
     """Update movie in database"""
     await Movie.filter(id=movie_id).update(**movie.dict(exclude_unset=True))
     return await Movie_Pydantic.from_queryset_single(Movie.get(id=movie_id))
 
 
 @router.delete("/stored/movies/{movie_id}", dependencies=[Depends(RateLimiter(times=5, seconds=1))])
-async def delete_stored_movie(movie_id: int):
+async def delete_stored_movie(movie_id: int, _: str = Depends(get_current_user)):
     """Delete movie from database"""
     await Movie.filter(id=movie_id).delete()
     return {"message": "Movie deleted successfully!"}
