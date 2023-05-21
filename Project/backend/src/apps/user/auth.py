@@ -61,7 +61,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise CREDENTIALS_EXCEPTION
 
 
-@router.get(
+@router.post(
     "/auth/token",
     status_code=status.HTTP_202_ACCEPTED,
     dependencies=[Depends(RateLimiter(times=5, minutes=1))],

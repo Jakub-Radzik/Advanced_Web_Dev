@@ -3,6 +3,7 @@ from fastapi_limiter.depends import RateLimiter
 from src.apps.rooms.models import Room
 from src.apps.rooms.schemas import Room_Pydantic, RoomIn_Pydantic
 from src.apps.user.auth import get_current_user
+from src.apps.utilities.redis import redis_cache
 
 router = APIRouter()
 
@@ -11,6 +12,7 @@ router = APIRouter()
     "/rooms",
     dependencies=[Depends(RateLimiter(times=5, seconds=15))],
 )
+@redis_cache
 async def get_rooms():
     rooms = await Room_Pydantic.from_queryset(Room.all())
     return rooms
@@ -31,6 +33,7 @@ async def get_room(room_id: int):
     "/rooms",
     dependencies=[Depends(RateLimiter(times=5, seconds=15))],
 )
+@redis_cache
 async def create_room(room: RoomIn_Pydantic, _: str = Depends(get_current_user)):
     room_obj = await Room.create(**room.dict(exclude_unset=True))
     return await Room_Pydantic.from_tortoise_orm(room_obj)

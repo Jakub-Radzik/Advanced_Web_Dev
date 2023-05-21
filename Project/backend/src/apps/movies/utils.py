@@ -154,3 +154,8 @@ async def gather_movie_details(response: dict, language: str) -> list[int]:
             )
         responses = await asyncio.gather(*tasks)
         return list(map(lambda x: x.json()["runtime"], responses))
+
+
+async def flush_redis():
+    redis = settings.REDIS_INSTANCE
+    return await redis.flushdb()
