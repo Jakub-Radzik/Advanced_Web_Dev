@@ -1,14 +1,18 @@
 import uuid
-
 import requests
 import json
+import os
+from dotenv import load_dotenv
+import fastapi
 
 
 def generate_pdf(data):
+    REQUEST_ATTEMPTS = 5
+    load_dotenv()
     qrstring = str(uuid.uuid1())
-    api_key = "6858NDU2MTo0NTc0OnJNd3VFekpqaDZWTGhjQ0Q"
-    template_id = "ddc77b23784dcdbc"
-    url = "https://api.craftmypdf.com/v1/create"
+    api_key = os.getenv("PDF_KEY")
+    template_id = os.getenv("PDF_TEMPLATE_ID")
+    url = os.getenv("PDF_URL")
     output_file = f"../tmp/{qrstring}'" + ".pdf"
 
     data["qrstring"] = qrstring
@@ -24,37 +28,13 @@ def generate_pdf(data):
 
     headers = {"X-API-KEY": api_key}
 
-    response = requests.post(url, headers=headers, json=json_payload)
-    if response.status_code == 200:
-        with open(output_file, "wb") as file:
-            file.write(response.content)
-        # print(f"PDF downloaded to: {output_file}")
-    # else:
-        # print(f"Error downloading PDF: {response.text}")
+    response = None
+    for _ in range(REQUEST_ATTEMPTS):
+        response = requests.post(url, headers=headers, json=json_payload)
+        if response.status_code == fastapi.status.HTTP_200_OK:
+            with open(output_file, "wb") as file:
+                file.write(response.content)
+            return output_file, response.status_code, qrstring
 
-    return output_file, response.status_code
-
-"""
-    my_data = {
-        "screening_date": "2021-09-30",
-        "screening_title": "Władca Pierścieni: Dwie wieże",
-        "screening_hour": "19:15",
-        "screening_room": "Sala 6",
-        "cinema": "Wroclaw Pasaż",
-        "qrstring": "",
-        "ticket_number": "WRJBH56",
-        "transaction_number": "DXmww3Vq54QBMBQn",
-        "items": [
-            {
-                "ticket_type": "Ulgowy",
-                "seat": "F-43",
-                "unit_price": 22.5
-            },
-            {
-                "ticket_type": "Normalny",
-                "seat": "A-43",
-                "unit_price": 33.50
-            }
-        ]
-    }
-"""
+    # if request was not successfull
+    return None, response.status_code, qrstring

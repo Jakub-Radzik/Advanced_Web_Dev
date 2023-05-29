@@ -24,6 +24,7 @@ services:
         condition: service_healthy
     volumes:
       - ./backend/src:/code/src
+      - ./backend/src/apps/tmp:/code/src/apps/tmp
 
   db:
     build:
