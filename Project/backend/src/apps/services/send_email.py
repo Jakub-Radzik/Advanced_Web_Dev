@@ -1,19 +1,17 @@
 import os
 import smtplib
+import fastapi
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-
-import fastapi
-
 from src.apps.services.generate_pdf import generate_pdf
-from dotenv import load_dotenv
+from src.settings import settings
+
 
 
 def send_email_with_pdf(recipient_email: str, data):
     REQUEST_ATTEMPTS = 5
-    load_dotenv()
 
     # Generate PDF
     output_file, response_code, qrstring = generate_pdf(data)
@@ -23,11 +21,11 @@ def send_email_with_pdf(recipient_email: str, data):
 
     # Prepare mailtrap credentials and PDF file path
     output_file = f"../tmp/" + output_file
-    username = os.getenv("EMAIL_USERNAME")
-    password = os.getenv("EMAIL_PASSWORD")
+    username = settings.EMAIL_USERNAME
+    password = settings.EMAIL_PASSWORD
 
     # Prepare email message
-    email_sender = os.getenv("EMAIL_FROM")
+    email_sender = settings.EMAIL_FROM
     email_subject = "Dziękujemy za zakup biletu"
 
     message = MIMEMultipart()
@@ -67,3 +65,28 @@ def send_email_with_pdf(recipient_email: str, data):
             return fastapi.status.HTTP_200_OK, data["qrstring"]
         except Exception as e:
             return fastapi.status.HTTP_400_BAD_REQUEST, None
+
+if __name__ == '__main__':
+    data = {
+  "screening_date": "2021-09-30",
+  "screening_title": "Władca Pierścieni: Dwie wieże",
+  "screening_hour": "19:15",
+  "screening_room": "Sala 6",
+  "cinema": "Wroclaw Pasaż",
+  "qrstring": "",
+  "ticket_number": "WRJBH56",
+  "transaction_number": "DXmww3Vq54QBMBQn",
+  "items": [
+    {
+      "ticket_type": "Ulgowy",
+      "seat": "F-43",
+      "unit_price": 22.5
+    },
+    {
+      "ticket_type": "Normalny",
+      "seat": "A-43",
+      "unit_price": 33.50
+    }
+  ]
+}
+    send_email_with_pdf("grygorukpp@gmail.com", data)
