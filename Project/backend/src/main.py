@@ -5,6 +5,7 @@ from fastapi_limiter import FastAPILimiter
 from src.apps.movies.routers import router as movies_router
 from src.apps.rooms.routers import router as rooms_router
 from src.apps.user.auth import router as auth_router
+from src.apps.sessions.routers import router as sessions_router
 from src.settings import settings
 from tortoise.contrib.fastapi import register_tortoise
 
@@ -44,6 +45,7 @@ app.add_middleware(
 app.include_router(movies_router, prefix="/api/v1", tags=["movies"])
 app.include_router(rooms_router, prefix="/api/v1", tags=["rooms"])
 app.include_router(auth_router, prefix="/api/v1", tags=["auth"])
+app.include_router(sessions_router, prefix="/api/v1", tags=["sessions"])
 
 
 register_tortoise(
