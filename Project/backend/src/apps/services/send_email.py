@@ -65,28 +65,3 @@ def send_email_with_pdf(recipient_email: str, data):
             return fastapi.status.HTTP_200_OK, data["qrstring"]
         except Exception as e:
             return fastapi.status.HTTP_400_BAD_REQUEST, None
-
-if __name__ == '__main__':
-    data = {
-  "screening_date": "2021-09-30",
-  "screening_title": "Władca Pierścieni: Dwie wieże",
-  "screening_hour": "19:15",
-  "screening_room": "Sala 6",
-  "cinema": "Wroclaw Pasaż",
-  "qrstring": "",
-  "ticket_number": "WRJBH56",
-  "transaction_number": "DXmww3Vq54QBMBQn",
-  "items": [
-    {
-      "ticket_type": "Ulgowy",
-      "seat": "F-43",
-      "unit_price": 22.5
-    },
-    {
-      "ticket_type": "Normalny",
-      "seat": "A-43",
-      "unit_price": 33.50
-    }
-  ]
-}
-    send_email_with_pdf("grygorukpp@gmail.com", data)
