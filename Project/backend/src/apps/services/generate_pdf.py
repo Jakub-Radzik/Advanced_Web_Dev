@@ -1,18 +1,16 @@
 import uuid
 import requests
 import json
-import os
-from dotenv import load_dotenv
 import fastapi
+from src.settings import settings
 
 
 def generate_pdf(data):
     REQUEST_ATTEMPTS = 5
-    load_dotenv()
     qrstring = str(uuid.uuid1())
-    api_key = os.getenv("PDF_KEY")
-    template_id = os.getenv("PDF_TEMPLATE_ID")
-    url = os.getenv("PDF_URL")
+    api_key = settings.PDF_KEY
+    template_id = settings.PDF_TEMPLATE_ID
+    url = settings.PDF_URL
     output_file = f"../tmp/{qrstring}'" + ".pdf"
 
     data["qrstring"] = qrstring
