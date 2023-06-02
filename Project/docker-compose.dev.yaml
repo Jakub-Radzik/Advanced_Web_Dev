@@ -24,6 +24,7 @@ services:
         condition: service_healthy
     volumes:
       - ./backend/src:/code/src
+      - ./backend/src/apps/tmp:/code/src/apps/tmp
 
   db:
     build:
@@ -49,7 +50,7 @@ services:
       - 6379
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+      - REDIS_DISABLE_COMMANDS=FLUSHALL,CONFIG
     healthcheck:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     command: /opt/bitnami/scripts/redis/run.sh --maxmemory 100mb
