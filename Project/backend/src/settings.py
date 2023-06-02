@@ -39,6 +39,7 @@ class Settings(CommonSettings, DatabaseSettings):
 
     CLIENT_ID: str
     CLIENT_SECRET: str
+    STRIPE_SECRET_KEY: str
 
 
     class Config:

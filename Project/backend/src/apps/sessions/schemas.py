@@ -1,6 +1,6 @@
 from tortoise import Tortoise
 from tortoise.contrib.pydantic.creator import pydantic_model_creator
-from pydantic import BaseModel, ValidationError, validator
+from pydantic import BaseModel, validator, EmailStr
 from datetime import datetime, date, time, timedelta
 
 from .models import Session, Ticket
@@ -75,3 +75,11 @@ class TicketUpdate(BaseModel):
     price: float
     is_vip: bool
     is_imax: bool
+
+
+class Tickets(BaseModel):
+    tickets: list[int]
+
+
+class BuyerInfo(BaseModel):
+    email: EmailStr

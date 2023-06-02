@@ -17,6 +17,7 @@ from src.apps.user.auth import get_current_user
 from src.apps.utilities.redis import redis_cache
 from tortoise.exceptions import DoesNotExist
 from tortoise.expressions import Q
+from src.apps.utilities.utils import change_int_into_letters
 
 router = APIRouter()
 
@@ -171,8 +172,8 @@ async def create_session_and_generate_assosciated_tickets(
                 tickets.append(
                     Ticket(
                         session_fk=session.id,
-                        row=row_idx,
-                        seat=col_idx,
+                        row=change_int_into_letters(row_idx + 1),
+                        seat=col_idx + 1,
                     )
                 )
     await Ticket.bulk_create(tickets)
