@@ -1,3 +1,4 @@
+from datetime import date
 from enum import Enum
 
 from pydantic import BaseModel
@@ -32,7 +33,7 @@ class Movie_Create(BaseModel):
     poster_path: str
     backdrop_path: str
     overview: str
-    release_date: str
+    release_date: date
     vote_average: float
     vote_count: int
     original_language: str

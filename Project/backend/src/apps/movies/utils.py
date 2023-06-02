@@ -103,11 +103,11 @@ async def get_currently_popular_movies(language: str, page: str) -> dict[str, li
             )
 
 
-async def get_genres_mapping(language: str) -> dict[str, str]:
+async def get_genres_mapping(lang: str) -> dict[str, str]:
     redis = settings.REDIS_INSTANCE
 
-    data_key = "genres_mapping" + language
-    last_checked_key = "genres_mapping_last_checked" + language
+    data_key = "genres_mapping" + lang
+    last_checked_key = "genres_mapping_last_checked" + lang
 
     data = await redis.get(data_key)
     last_checked = await redis.get(last_checked_key)
@@ -122,7 +122,7 @@ async def get_genres_mapping(language: str) -> dict[str, str]:
         return json.loads(data)
     else:
         req = requests.get(
-            f"{settings.THE_MOVIE_BASE_URL}/genre/movie/list?api_key={settings.THE_MOVIE_DB_API_KEY}&language={language}"
+            f"{settings.THE_MOVIE_BASE_URL}/genre/movie/list?api_key={settings.THE_MOVIE_DB_API_KEY}&language={lang}"
         )
 
         if req.status_code == status.HTTP_200_OK:
@@ -154,3 +154,8 @@ async def gather_movie_details(response: dict, language: str) -> list[int]:
             )
         responses = await asyncio.gather(*tasks)
         return list(map(lambda x: x.json()["runtime"], responses))
+
+
+async def flush_redis():
+    redis = settings.REDIS_INSTANCE
+    return await redis.flushdb()
