@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Group, Stepper } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
-import { Show } from "../../../types/show";
 import { Cinema } from "../cinema";
 import { useReservationContext } from "../state";
 import { Confirmation } from "./components/confirmation";
 import { MovieSelection } from "./components/movieSelection";
 import { ClientConfirmation } from "./components/clientConfirmation";
-import { useScreenings } from "../../../hooks/useScreenings";
+import { useSessions } from "../../../hooks/useSessions";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { ClientForm } from "../../../types/forms";
 import { Payment } from "./components/payment";
+import { Session } from "../../../types/movie";
 
 export const ReservationFlow = () => {
   const MAX_STEP = 4;
@@ -20,14 +20,14 @@ export const ReservationFlow = () => {
   const { reservation, setClientData } = useReservationContext();
   let { showId } = useParams();
   const navigate = useNavigate();
-  const [show, setShow] = useState<Show | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [backButtonVisible] = useState(true); // we will think about it
 
-  const { getScreening } = useScreenings();
+  const { getSessionById } = useSessions();
 
   useEffect(() => {
     if (showId) {
-      getScreening(showId).then(data => setShow(data.show));
+      getSessionById(parseInt(showId)).then(data => setSession(data));
     }
   }, [showId]);
 
@@ -101,18 +101,18 @@ export const ReservationFlow = () => {
           description='Potwierdź wybrany film'
           allowStepSelect={false}
         >
-          {show ? <MovieSelection show={show} /> : <Box>Ładowanie...</Box>}
+          {session ? (
+            <MovieSelection session={session} />
+          ) : (
+            <Box>Ładowanie...</Box>
+          )}
         </Stepper.Step>
 
         <Stepper.Step
           label='Wybór miejsc'
           description='Wybierz miejsca i bilety'
         >
-          {show ? (
-            <Cinema soldSeats={show.soldSeats} room={show.room} />
-          ) : (
-            <Box>Ładowanie...</Box>
-          )}
+          {session ? <Cinema session={session} /> : <Box>Ładowanie...</Box>}
         </Stepper.Step>
 
         <Stepper.Step

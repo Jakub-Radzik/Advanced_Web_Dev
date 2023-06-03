@@ -1,13 +1,13 @@
 import { createContext, useContext, useState } from "react";
-import { SelectedPlace, Ticket } from "./mocks";
 import { ClientForm } from "../../../types/forms";
+import { Ticket } from "../../../types/ticket";
 
 type ClientData = Omit<ClientForm, "termsOfService">;
 
 type ReservationContextValue = {
-  reservation: SelectedPlace[];
-  addReservation: (row: number, seat: number, ticket: Ticket) => void;
-  removeReservation: (row: number, seat: number) => void;
+  reservation: Ticket[];
+  addReservation: (ticket: Ticket) => void;
+  removeReservation: (ticketId: number) => void;
   clientData: ClientData;
   setClientData: (values: ClientData) => void;
 };
@@ -26,7 +26,7 @@ const ReservationContext = createContext<ReservationContextValue>({
 });
 
 function ReservationProvider({ children }: { children: React.ReactNode }) {
-  const [reservation, setReservation] = useState<SelectedPlace[]>([]);
+  const [reservation, setReservation] = useState<Ticket[]>([]);
   const [clientData, setClientData] = useState<ClientData>({
     email: "",
     firstName: "",
@@ -34,29 +34,16 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
     phone: "",
   });
 
-  const addReservation = (row: number, seat: number, ticket: Ticket) => {
-    const existingReservation = reservation.findIndex(
-      r => r.row === row && r.seat === seat
-    );
+  const addReservation = (ticket: Ticket) => {
+    const existingReservation = reservation.findIndex(t => t.id === ticket.id);
 
-    if (existingReservation !== -1) {
-      reservation[existingReservation].ticket = ticket;
-      setReservation([...reservation]);
-      return;
+    if (existingReservation === -1) {
+      setReservation([...reservation, ticket]);
     }
-
-    setReservation([
-      ...reservation,
-      {
-        row,
-        seat,
-        ticket,
-      },
-    ]);
   };
 
-  const removeReservation = (row: number, seat: number) => {
-    setReservation(reservation.filter(r => r.row !== row && r.seat !== seat));
+  const removeReservation = (ticketId: number) => {
+    setReservation(reservation.filter(t => t.id !== ticketId));
   };
 
   return (

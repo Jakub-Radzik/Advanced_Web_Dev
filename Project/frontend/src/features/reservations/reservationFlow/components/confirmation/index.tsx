@@ -1,12 +1,10 @@
 import { Flex, ScrollArea } from "@mantine/core";
 import { useReservationContext } from "../../../state";
 import { TicketCard } from "../ticketCard";
-import { SelectedPlace } from "../../../state/mocks";
+import { Ticket } from "../../../../../types/ticket";
 
-const ticketSorter = (r1: SelectedPlace, r2: SelectedPlace) => {
-  const place1 = r1.row * 10 + r1.seat;
-  const place2 = r2.row * 10 + r2.seat;
-  return place1 - place2;
+const ticketSorter = (r1: Ticket, r2: Ticket) => {
+  return r1.id - r2.id;
 };
 
 export const Confirmation = () => {
@@ -15,8 +13,8 @@ export const Confirmation = () => {
   return (
     <ScrollArea type={"always"}>
       <Flex p='xs'>
-        {reservation.sort(ticketSorter).map((reservation, idx) => (
-          <TicketCard place={reservation} key={idx} />
+        {reservation.sort(ticketSorter).map((ticket, idx) => (
+          <TicketCard ticket={ticket} key={idx} />
         ))}
       </Flex>
     </ScrollArea>
