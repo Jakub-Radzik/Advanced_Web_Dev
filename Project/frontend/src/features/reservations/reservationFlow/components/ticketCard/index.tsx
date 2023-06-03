@@ -1,15 +1,15 @@
 import { Box, Card, Center, Flex, Text, Title } from "@mantine/core";
-import { SelectedPlace } from "../../../state/mocks";
 import { TicketColors, TicketEdgeType } from "./types";
 import { TicketTextRow } from "./components/TicketTextRow";
 import { TicketEdge } from "./components/TicketEdge";
 import { APP_NAME } from "../../../../../constants";
+import { Ticket } from "../../../../../types/ticket";
 
 type TicketCardProps = {
-  place: SelectedPlace;
+  ticket: Ticket;
 };
 
-export const TicketCard = ({ place }: TicketCardProps) => {
+export const TicketCard = ({ ticket }: TicketCardProps) => {
   return (
     <Box miw={300} h={130} pos={"relative"} display={"inline"} m='xs'>
       <Card
@@ -31,10 +31,9 @@ export const TicketCard = ({ place }: TicketCardProps) => {
           </Center>
 
           <Flex justify={"space-between"}>
-            <TicketTextRow description={"Rzad"} value={place.row} />
-            <TicketTextRow description={"Miejsce"} value={place.seat} />
+            <TicketTextRow description={"Rzad"} value={ticket.row} />
+            <TicketTextRow description={"Miejsce"} value={ticket.seat} />
           </Flex>
-          <TicketTextRow description={"Typ"} value={place.ticket.type} />
         </Flex>
 
         <Flex
@@ -56,7 +55,7 @@ export const TicketCard = ({ place }: TicketCardProps) => {
             fw={"bold"}
             c={TicketColors.fontSecondary}
           >
-            {place.ticket.price} zł
+            {ticket.price} zł
           </Text>
         </Flex>
       </Card>

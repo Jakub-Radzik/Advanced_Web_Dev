@@ -13,12 +13,13 @@ export type SoldSeat = {
 }
 
 export type Room = {
+    id: number,
     name : string,
     rows: number,
-    seats: number,
-    isIMAX: boolean,
-    aligment: string,
-    screenWidth: number,
-    matrix: (1 | null)[][]
+    seats_per_row: number,
+    is_IMAX: boolean,
+    alignment: string,
+    screen_size: number,
+    matrix: (boolean)[][]
 }
 
