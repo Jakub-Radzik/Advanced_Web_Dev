@@ -1,3 +1,6 @@
+import { Room } from "../show";
+import { Ticket } from "../ticket";
+
 export type Movie = {
     id: number,
     title: string,
@@ -11,7 +14,6 @@ export type Movie = {
     original_language: string,
     runtime: number,
     genres: string[],
-    // director: string,
 }
 
 export type Screenings = {
@@ -21,6 +23,16 @@ export type Screenings = {
         time: string,
     }[],
 }[];
+
+export type Sessions = Record<string, {id: number, time: string}[]>
+
+export type Session = {
+    id: number,
+    room_fk: Room,
+    movie_fk: Movie,
+    datetime: string,
+    tickets: Ticket[]
+  }
 
 export type Screening = {
     id: number,

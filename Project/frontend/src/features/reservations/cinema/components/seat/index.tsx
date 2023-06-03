@@ -1,37 +1,25 @@
-import { Flex, Menu, Text, Tooltip, UnstyledButton } from "@mantine/core";
+import { Flex, Menu, Text, UnstyledButton } from "@mantine/core";
 import { useState } from "react";
 import { ROW_SPACE, SEAT_SIZE, SEAT_SPACE } from "../../../../../constants";
 import { useReservationContext } from "../../../state";
-import { Ticket, tickets } from "../../../state/mocks";
-import { SeatState } from "./types";
+import { Ticket } from "../../../../../types/ticket";
 
 type SeatProps = {
-  i: number;
   row: number;
-  seatState: SeatState;
+  i: string;
+  ticket: Ticket;
 };
 
-export const Seat = ({ row, i, seatState }: SeatProps) => {
-  const { reservation, addReservation, removeReservation } =
-    useReservationContext();
+export const Seat = ({ row, i, ticket }: SeatProps) => {
+  const { addReservation, removeReservation } = useReservationContext();
 
-  const [ticket, setTicket] = useState<Ticket | null>(() => {
-    const r = reservation.find(r => r.row === row && r.seat === i);
-    return r?.ticket || null;
-  });
+  const [isReserved, setIsReserved] = useState(false);
 
-  const initColor =
-    seatState === SeatState.FREE
-      ? "#00ff00"
-      : seatState === SeatState.RESERVED
-      ? "#b7adb9"
-      : "#ff0000";
+  const initColor = ticket.is_sold ? "#b7adb9" : "#00ff00";
 
-  const isClickable = seatState === SeatState.FREE;
+  const seatColor = isReserved ? "#00c3ff" : initColor;
 
-  const isSelected = ticket !== null;
-
-  const seatColor = isSelected ? "white" : initColor;
+  const isClickable = !ticket.is_sold;
 
   const HandlerElement = (
     <Flex
@@ -51,42 +39,30 @@ export const Seat = ({ row, i, seatState }: SeatProps) => {
   );
 
   const addReservationHandler = (ticket: Ticket) => {
-    setTicket(ticket);
-    addReservation(row, i, ticket);
+    addReservation(ticket);
+    setIsReserved(true);
   };
 
   const removeReservationHandler = () => {
-    setTicket(null);
-    removeReservation(row, i);
+    removeReservation(ticket.id);
+    setIsReserved(false);
   };
 
   return (
     <Menu shadow='md' width={200}>
       {isClickable ? (
-        ticket ? (
-          <Tooltip label={ticket?.type}>
-            <Menu.Target>
-              <UnstyledButton>{HandlerElement}</UnstyledButton>
-            </Menu.Target>
-          </Tooltip>
-        ) : (
-          <Menu.Target>
-            <UnstyledButton>{HandlerElement}</UnstyledButton>
-          </Menu.Target>
-        )
+        <Menu.Target>
+          <UnstyledButton>{HandlerElement}</UnstyledButton>
+        </Menu.Target>
       ) : (
         HandlerElement
       )}
 
       <Menu.Dropdown>
         <Menu.Label>Bilety</Menu.Label>
-        {tickets.map((ticket, idx) => {
-          return (
-            <Menu.Item key={idx} onClick={() => addReservationHandler(ticket)}>
-              {ticket.type} - {`${ticket.price} zł`}
-            </Menu.Item>
-          );
-        })}
+        <Menu.Item onClick={() => addReservationHandler(ticket)}>
+          Normalny - {`${ticket.price} zł`}
+        </Menu.Item>
         <Menu.Divider></Menu.Divider>
         <Menu.Item onClick={removeReservationHandler}>Anuluj</Menu.Item>
       </Menu.Dropdown>

@@ -26,7 +26,7 @@ class Ticket(Model):
     is_imax = fields.BooleanField(default=False)
     last_reserved = fields.DatetimeField(null=True)
 
-    def is_reserved(self):
+    def is_reserved(self) -> bool:
         return self.last_reserved is not None and self.last_reserved > datetime.now() - timedelta(minutes=5)
 
     class Meta:
@@ -43,7 +43,7 @@ class TicketReservation(Model):
     created_at = fields.DatetimeField(auto_now_add=True)
     transaction_id = fields.CharField(max_length=255, null=True)
 
-    def is_expired(self):
+    def is_expired(self) -> bool:
         return self.created_at < datetime.now() - timedelta(minutes=5)
 
     class PydanticMeta:

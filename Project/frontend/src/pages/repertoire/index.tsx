@@ -1,5 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, Flex, Image, Paper, ScrollArea, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Paper,
+  ScrollArea,
+  Text,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { DetailsDrawer } from "../../features/detailsDrawer";
 import { Movie } from "../../types/movie";
@@ -15,11 +23,11 @@ export const Repertoire = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const { getMovies } = useMovies();
+  const { getStoredMovies } = useMovies();
 
   useEffect(() => {
-    getMovies().then(data => {
-      setMovies(data.results)
+    getStoredMovies().then(data => {
+      setMovies(data);
     });
   }, []);
 
@@ -31,7 +39,7 @@ export const Repertoire = () => {
           <Flex>
             {movies?.map((movie, idx) => (
               <Paper
-                shadow="xs"
+                shadow='xs'
                 w={200}
                 m={"xs"}
                 p={"xs"}
@@ -39,7 +47,7 @@ export const Repertoire = () => {
                 key={idx}
               >
                 <Box h={60}>
-                  <Text fz={'md'}>{movie.title}</Text>
+                  <Text fz={"md"}>{movie.title}</Text>
                 </Box>
                 <Image src={movie.poster_path} fit={"contain"} />
 
@@ -48,7 +56,7 @@ export const Repertoire = () => {
                     size={"sm"}
                     color={"dark"}
                     onClick={() => handleDrawer(movie)}
-                    mt={'sm'}
+                    mt={"sm"}
                   >
                     <Text>Kup bilet</Text>
                   </Button>

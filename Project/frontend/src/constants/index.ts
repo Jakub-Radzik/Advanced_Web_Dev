@@ -4,4 +4,6 @@ export const ROW_SPACE = 3;
 
 export const APP_NAME = "KINO API";
 
-export const API_URL = "http://localhost:8008/api/v1"
+export const API_URL = "http://localhost:8008/api/v1";
+
+export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

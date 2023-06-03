@@ -10,11 +10,17 @@ export const useMovies = () => {
 
   const getStoredMovies = () =>
     axios
-      .get<{ results: Movie[] }>(`${API_URL}/stored/movies`)
+      .get<Movie[]>(`${API_URL}/stored/movies`)
+      .then(response => response.data);
+
+  const getMovies = () =>
+    axios
+      .get<{ results: Movie[] }>(`${API_URL}/movies`)
       .then(response => response.data);
 
   return {
     getMovie,
-    getMovies: getStoredMovies,
+    getStoredMovies,
+    getMovies,
   };
 };
