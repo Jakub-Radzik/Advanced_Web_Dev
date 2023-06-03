@@ -9,12 +9,11 @@ from src.apps.services.generate_pdf import generate_pdf
 from src.settings import settings
 
 
-
 def send_email_with_pdf(recipient_email: str, data):
     REQUEST_ATTEMPTS = 5
 
     # Generate PDF
-    output_file, response_code, qrstring = generate_pdf(data)
+    output_file, response_code = generate_pdf(data)
     # if PDF was not generated correctly, return 400 error
     if response_code != fastapi.status.HTTP_200_OK:
         return fastapi.status.HTTP_412_PRECONDITION_FAILED
@@ -62,6 +61,8 @@ def send_email_with_pdf(recipient_email: str, data):
                 server.sendmail(email_sender, recipient_email, message.as_string())
             attachment.close()
             os.remove(output_file)
-            return fastapi.status.HTTP_200_OK, data["qrstring"]
+            return fastapi.status.HTTP_200_OK
         except Exception as e:
-            return fastapi.status.HTTP_400_BAD_REQUEST, None
+            continue
+
+    return fastapi.status.HTTP_412_PRECONDITION_FAILED

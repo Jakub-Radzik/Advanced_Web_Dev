@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from src.apps.user.models import BlacklistTokens
 from src.settings import settings
 
-from .utils import OAuth2PasswordBearerWithCookie
+from src.apps.utilities.utils import OAuth2PasswordBearerWithCookie
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
@@ -63,7 +63,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 @router.post(
     "/auth/token",
-    status_code=status.HTTP_202_ACCEPTED,
+    status_code=status.HTTP_303_SEE_OTHER,
     dependencies=[Depends(RateLimiter(times=5, minutes=1))],
 )
 async def sso_login_for_token():

@@ -21,3 +21,31 @@ class OAuth2PasswordBearerWithCookie(OAuth2PasswordBearer):
             else:
                 return None
         return param
+
+
+class OAuth2ReservationBearerWithCookie(OAuth2PasswordBearer):
+    """
+    Returns the reservation token from the cookie.
+    """
+    async def __call__(self, request: Request) -> str | None:
+        reservation_id: str | None = request.cookies.get("reservation_token")
+        if not reservation_id:
+            if self.auto_error:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid reservation token",
+                )
+            else:
+                return None
+        return reservation_id
+
+
+def change_int_into_letters(value: int):
+    """
+    Changes the integer into letters, e.g. 1 -> A, 2 -> B, 27 -> AA.
+    """
+    letters = []
+    while value > 0:
+        value, remainder = divmod(value - 1, 26)
+        letters.append(chr(65 + remainder))
+    return "".join(reversed(letters))
