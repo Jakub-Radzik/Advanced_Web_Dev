@@ -12,18 +12,20 @@ import { useForm } from "@mantine/form";
 import { ClientForm } from "../../../types/forms";
 import { Payment } from "./components/payment";
 import { Session } from "../../../types/movie";
+import { usePayments } from "../../../hooks/usePayments";
 
 export const ReservationFlow = () => {
   const MAX_STEP = 4;
   const [active, setActive] = useState(0);
   const [, setHighestStepVisited] = useState(active);
-  const { reservation, setClientData } = useReservationContext();
+  const { reservation, clearReservation, setClientData } = useReservationContext();
   let { showId } = useParams();
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
-  const [backButtonVisible] = useState(true); // we will think about it
+  const [backButtonVisible, setBackButtonVisible] = useState(true); // we will think about it
 
   const { getSessionById } = useSessions();
+  const {reserveTickets, reserveTicketsEmail} = usePayments();
 
   useEffect(() => {
     if (showId) {
@@ -31,11 +33,39 @@ export const ReservationFlow = () => {
     }
   }, [showId]);
 
+  useEffect(() => {
+    if(active === 0){
+      clearReservation();
+    }
+  },[active])
+
+  const setBackVisibility = (nextStep: number) => {
+    if (nextStep === 0 || nextStep === 1 || nextStep === 2 ) {
+      setBackButtonVisible(true)
+      return;
+    }
+
+    if (nextStep === 3) {
+      setBackButtonVisible(false)
+      return;
+    }
+  }
+
   const handleStepChange = (nextStep: number) => {
     const isOutOfBounds = nextStep > MAX_STEP || nextStep < 0;
 
+    setBackVisibility(nextStep);
+
     if (isOutOfBounds) {
       return;
+    }
+
+    if(nextStep === 2 && !reservation.length) {
+      return;
+    }
+
+    if(nextStep === 3 && reservation.length) {
+      reserveTickets(reservation.map(r => r.id));
     }
 
     // We want to submit form
@@ -45,6 +75,7 @@ export const ReservationFlow = () => {
         return;
       }
       setClientData(form.values);
+      reserveTicketsEmail(form.values.email);
     }
 
     setActive(nextStep);

@@ -11,6 +11,7 @@ from src.apps.sessions.models import TicketReservation, Ticket
 from src.apps.sessions.schemas import Tickets, BuyerInfo
 from src.apps.services.send_email import send_email_with_pdf
 import stripe
+from tortoise.expressions import Q
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -69,7 +70,10 @@ async def reserve_tickets(tickets: Tickets, response: Response):
     reservation_id = str(uuid4())
     try:
         db_ticket_count = await Ticket.filter(
-            id__in=tickets.tickets, is_reserved=False, is_sold=False
+            Q(last_reserved__gt=(datetime.now() - timedelta(minutes=5)))
+            | Q(last_reserved=None),
+            is_sold=False,
+            id__in=tickets.tickets,
         ).count()
         if db_ticket_count != len(tickets.tickets):
             raise RESERVATION_EXCEPTION
