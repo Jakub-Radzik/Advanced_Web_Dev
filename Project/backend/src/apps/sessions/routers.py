@@ -174,7 +174,7 @@ async def create_session_and_generate_assosciated_tickets(
                         session_fk_id=session.id,
                         row=change_int_into_letters(row_idx + 1),
                         seat=col_idx + 1,
-                        price=20.0
+                        price=20.00
                     )
                 )
     await Ticket.bulk_create(tickets)
