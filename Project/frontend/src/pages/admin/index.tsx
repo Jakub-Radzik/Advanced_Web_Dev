@@ -23,7 +23,7 @@ export const Admin = () => {
     script.onload = () => {
       gapi.load('auth2', () => {
         gapi.auth2.init({
-          client_id: 'YOUR_CLIENT_ID',
+          client_id: '181433232492-d3mk5g8rqupbek3g1i99713llp9r60mh.apps.googleusercontent.com',
         });
       });
     };
