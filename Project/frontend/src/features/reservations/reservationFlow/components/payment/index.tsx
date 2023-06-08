@@ -7,7 +7,7 @@ import {
   } from '@stripe/react-stripe-js';
 import { FormEvent, useState } from 'react';
 import { STRIPE_PUBLISHABLE_KEY } from '../../../../../constants';
-import { Box, Center } from '@mantine/core';
+import { Box, Button, Center } from '@mantine/core';
 
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -44,8 +44,6 @@ const PaymentForm = ({clientSecret}:{clientSecret: string}) => {
             return;
         }
     
-        console.log("before")
-    
         const {error} = await stripe.confirmPayment({
                 elements,
                 clientSecret,
@@ -69,9 +67,9 @@ const PaymentForm = ({clientSecret}:{clientSecret: string}) => {
     return (<Center><Box w={500}>
         <form onSubmit={handleSubmit}>
         <PaymentElement />
-        <button type="submit" disabled={!stripe || !elements}>
+        <Button color='primary' type='submit' disabled={!stripe || !elements} my={"xl"}>
             Pay
-        </button>
+        </Button>
     </form>
     </Box></Center>)
 }

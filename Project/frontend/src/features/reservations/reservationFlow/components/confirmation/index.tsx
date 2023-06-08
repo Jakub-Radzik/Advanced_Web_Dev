@@ -1,6 +1,5 @@
-import { Flex, ScrollArea } from "@mantine/core";
+import { Center, Flex, Title } from "@mantine/core";
 import { useReservationContext } from "../../../state";
-import { TicketCard } from "../ticketCard";
 import { Ticket } from "../../../../../types/ticket";
 
 const ticketSorter = (r1: Ticket, r2: Ticket) => {
@@ -9,14 +8,16 @@ const ticketSorter = (r1: Ticket, r2: Ticket) => {
 
 export const Confirmation = () => {
   const { reservation } = useReservationContext();
-
   return (
-    <ScrollArea type={"always"}>
-      <Flex p='xs'>
+<Center>    <Flex direction={"column"}>
+    <Title>Tickets:</Title>
+      <Flex direction={"column"} my='lg'>
         {reservation.sort(ticketSorter).map((ticket, idx) => (
-          <TicketCard ticket={ticket} key={idx} />
+            <Title>{ticket.row}{ticket.seat} - {ticket.price} zł</Title>
         ))}
       </Flex>
-    </ScrollArea>
+    <Title>Razem: {reservation.length * 20} zł</Title>
+    </Flex>
+    </Center>
   );
 };

@@ -22,7 +22,8 @@ export const ReservationFlow = () => {
   let { showId } = useParams();
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
-  const [backButtonVisible, setBackButtonVisible] = useState(true); // we will think about it
+  const [backButtonVisible, setBackButtonVisible] = useState(true); 
+  const [nextButtonVisible, setNextButtonVisible] = useState(true); 
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   const { getSessionById } = useSessions();
@@ -41,7 +42,7 @@ export const ReservationFlow = () => {
   },[active])
 
   const setBackVisibility = (nextStep: number) => {
-    if (nextStep === 0 || nextStep === 1 || nextStep === 2 ) {
+    if (nextStep === 0 || nextStep === 1 || nextStep === 2 || nextStep === 4 ) {
       setBackButtonVisible(true)
       return;
     }
@@ -52,10 +53,23 @@ export const ReservationFlow = () => {
     }
   }
 
+  const setNextVisibility = (nextStep: number) => {
+    if (nextStep !== 4 ) {
+      setNextButtonVisible(true)
+      return;
+    }
+
+    if (nextStep === 4) {
+      setNextButtonVisible(false)
+      return;
+    }
+  }
+
   const handleStepChange = (nextStep: number) => {
     const isOutOfBounds = nextStep > MAX_STEP || nextStep < 0;
 
     setBackVisibility(nextStep);
+    setNextVisibility(nextStep);
 
     if (isOutOfBounds) {
       return;
@@ -78,7 +92,6 @@ export const ReservationFlow = () => {
       setClientData(form.values);
       reserveTicketsEmail(form.values.email).then(data => {
         reserveCheckout().then(res => {
-          console.log(data);
           setClientSecret(res.data.client_secret);
         });
       })
@@ -177,12 +190,12 @@ export const ReservationFlow = () => {
             Back
           </Button>
         )}
-        <Button
+        {nextButtonVisible && (        <Button
           disabled={disabled}
           onClick={() => handleStepChange(active + 1)}
         >
           Next step
-        </Button>
+        </Button>)}
       </Group>
     </>
   );

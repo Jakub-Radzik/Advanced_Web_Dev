@@ -3,14 +3,12 @@ import { API_URL } from "../constants";
 
 export const usePayments = () => {
     const reserveTickets = (tickets: number[]) => {
-        console.log("reserve: ", tickets);
         axios.post(`${API_URL}/reserve/tickets`, { tickets }, {
             withCredentials: true
-        }).then((res) => {console.log(res)});
+        });
     };
 
     const reserveTicketsEmail = (email: string) => {
-        console.log("call  for: ", email)
         return axios.post(`${API_URL}/reserve/buyer_info`, { email }, {
             withCredentials: true
         });
