@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import { Button } from '@mantine/core';
+import React from 'react';
 
 export const Admin = () => {
   const handleGoogleLogin = async () => {
@@ -14,8 +14,8 @@ export const Admin = () => {
   };
 
   return (
-    <button onClick={handleGoogleLogin}>
+    <Button onClick={handleGoogleLogin}>
       Login with Google
-    </button>
+    </Button>
   );
 };
