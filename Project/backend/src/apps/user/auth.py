@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status, Request
+from fastapi.responses import RedirectResponse
 from fastapi_sso.sso.google import GoogleSSO
 from fastapi_limiter.depends import RateLimiter
 from tortoise.exceptions import IntegrityError
@@ -61,7 +62,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise CREDENTIALS_EXCEPTION
 
 
-@router.post(
+@router.get(
     "/auth/token",
     status_code=status.HTTP_303_SEE_OTHER,
     dependencies=[Depends(RateLimiter(times=5, minutes=1))],
@@ -82,7 +83,8 @@ async def sso_login_callback(request: Request, response: Response):
     response.set_cookie(
         key="access_token", value=f"Bearer {access_token}", httponly=True
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    # PLEASE DONT CHANGE IT
+    return RedirectResponse("http://localhost:8080/admin")
 
 
 @router.get(

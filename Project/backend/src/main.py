@@ -16,6 +16,7 @@ origins = [
     "http://localhost:8080",
     "https//accounts.google.com/v3/signin/identifier",
     "http://localhost:8008",
+    "http://localhost:3000",
 ]
 
 
