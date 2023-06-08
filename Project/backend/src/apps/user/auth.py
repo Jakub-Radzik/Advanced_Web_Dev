@@ -83,7 +83,8 @@ async def sso_login_callback(request: Request, response: Response):
     response.set_cookie(
         key="access_token", value=f"Bearer {access_token}", httponly=True
     )
-    return RedirectResponse("http://localhost:3000")
+    # PLEASE DONT CHANGE IT
+    return RedirectResponse("http://localhost:8080/admin")
 
 
 @router.get(
