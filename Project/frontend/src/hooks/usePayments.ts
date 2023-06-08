@@ -1,21 +1,31 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../constants";
 
 export const usePayments = () => {
     const reserveTickets = (tickets: number[]) => {
-        console.log(tickets);
-        axios.post(`${API_URL}/reserve/tickets`, { tickets }).then((res) => {console.log(res)});
+        console.log("reserve: ", tickets);
+        axios.post(`${API_URL}/reserve/tickets`, { tickets }, {
+            withCredentials: true
+        }).then((res) => {console.log(res)});
     };
 
-    const reserveTicketsEmail = (email: string) => 
-        axios.post(`${API_URL}/reserve/buyer_info`, { email });
+    const reserveTicketsEmail = (email: string) => {
+        console.log("call  for: ", email)
+        return axios.post(`${API_URL}/reserve/buyer_info`, { email }, {
+            withCredentials: true
+        });
+    }
 
     const reserveCheckout = () => {
-        return axios.post<any, any>(`${API_URL}/reserve/checkout`);
+        return axios.post<any, AxiosResponse<{client_secret: string}>>(`${API_URL}/reserve/checkout`,{}, {
+            withCredentials: true
+        })
     }
 
     const sellTickets = () => {
-        axios.post(`${API_URL}/reserve/sold`);
+        return axios.post(`${API_URL}/reserve/sold`,{}, {
+            withCredentials: true
+        });
     }    
 
     return {

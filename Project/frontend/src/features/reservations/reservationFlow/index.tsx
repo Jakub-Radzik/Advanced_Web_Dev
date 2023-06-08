@@ -23,9 +23,10 @@ export const ReservationFlow = () => {
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
   const [backButtonVisible, setBackButtonVisible] = useState(true); // we will think about it
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   const { getSessionById } = useSessions();
-  const {reserveTickets, reserveTicketsEmail} = usePayments();
+  const {reserveTickets, reserveTicketsEmail, reserveCheckout} = usePayments();
 
   useEffect(() => {
     if (showId) {
@@ -75,7 +76,12 @@ export const ReservationFlow = () => {
         return;
       }
       setClientData(form.values);
-      reserveTicketsEmail(form.values.email);
+      reserveTicketsEmail(form.values.email).then(data => {
+        reserveCheckout().then(res => {
+          console.log(data);
+          setClientSecret(res.data.client_secret);
+        });
+      })
     }
 
     setActive(nextStep);
@@ -159,7 +165,9 @@ export const ReservationFlow = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Payment/>
+          {
+            clientSecret ? <Payment clientSecret={clientSecret} /> : <Box>Ładowanie...</Box>
+          }
         </Stepper.Completed>
       </Stepper>
 
