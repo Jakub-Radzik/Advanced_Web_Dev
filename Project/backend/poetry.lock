@@ -800,7 +800,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "bb5797ad4f11599499376a0d7850a19c19a5ca5347285989c16dafb642febad0"
+content-hash = "dabccb9020a6fd5d1d25f626f0729d224a9acc74313756b3f82eeeec1f3e82c8"
 
 [metadata.files]
 aerich = [

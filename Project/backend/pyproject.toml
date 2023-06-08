@@ -27,6 +27,7 @@ fastapi-sso = "^0.6.4"
 qrcode = "^7.4.2"
 uuid = "^1.30"
 stripe = "^5.4.0"
+pytz = "^2023.3"
 
 
 [tool.poetry.group.dev.dependencies]
