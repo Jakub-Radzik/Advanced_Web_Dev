@@ -8,6 +8,7 @@ type ReservationContextValue = {
   reservation: Ticket[];
   addReservation: (ticket: Ticket) => void;
   removeReservation: (ticketId: number) => void;
+  clearReservation: () => void;
   clientData: ClientData;
   setClientData: (values: ClientData) => void;
 };
@@ -16,6 +17,7 @@ const ReservationContext = createContext<ReservationContextValue>({
   reservation: [],
   addReservation: () => {},
   removeReservation: () => {},
+  clearReservation: () => {},
   clientData: {
     email: "",
     firstName: "",
@@ -46,6 +48,10 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
     setReservation(reservation.filter(t => t.id !== ticketId));
   };
 
+  const clearReservation = () => {
+    setReservation([]);
+  };
+
   return (
     <ReservationContext.Provider
       value={{
@@ -54,6 +60,7 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
         removeReservation,
         clientData,
         setClientData: values => setClientData(values),
+        clearReservation,
       }}
     >
       {children}

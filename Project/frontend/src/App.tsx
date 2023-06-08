@@ -6,6 +6,7 @@ import { Repertoire } from "./pages/repertoire";
 import { Reservation } from "./pages/reservation";
 import { Admin } from "./pages/admin";
 import { Login } from "./pages/login";
+import { ConfirmPayment } from "./pages/confirmPayment";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/reservate/:showId' element={<Reservation />} />
           <Route path='/login' element={<Login />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/confirmPayment' element={<ConfirmPayment/>} />
         </Routes>
       </AppShell>
     </BrowserRouter>

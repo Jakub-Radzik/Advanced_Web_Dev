@@ -12,6 +12,7 @@ from src.apps.sessions.schemas import Tickets, BuyerInfo
 from src.apps.services.send_email import send_email_with_pdf
 from tortoise.expressions import Q
 import stripe
+from tortoise.expressions import Q
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -188,19 +189,19 @@ async def reserve_sold(
             "seat",
         )
         pdf_data = {
-            "screening_date": ticket_data[0]["session_fk__datetime"].date(),
-            "screening_title": ticket_data[0]["session_fk__movie_fk__title"],
-            "screening_hour": ticket_data[0]["session_fk__datetime"].time(),
-            "screening_room": ticket_data[0]["session_fk__room_fk__name"],
+            "screening_date": str(ticket_data[0]["session_fk__datetime"].date()),
+            "screening_title": str(ticket_data[0]["session_fk__movie_fk__title"]),
+            "screening_hour": str(ticket_data[0]["session_fk__datetime"].time()),
+            "screening_room": str(ticket_data[0]["session_fk__room_fk__name"]),
             "cinema": "Cinema World",
-            "qrstring": reservation.reservation_id,
-            "ticket_number": reservation.reservation_id,
-            "transaction_number": reservation.transaction_id,
+            "qrstring": str(reservation.reservation_id),
+            "ticket_number": str(reservation.reservation_id),
+            "transaction_number": str(reservation.transaction_id),
             "items": [
                 {
                     "ticket_type": "Normalny",
                     "seat": f'{ticket["row"]}-{ticket["seat"]}',
-                    "unit_price": ticket["price"],
+                    "unit_price": str(ticket["price"]),
                 }
                 for ticket in ticket_data
             ],

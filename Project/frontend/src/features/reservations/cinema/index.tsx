@@ -15,7 +15,6 @@ export const Cinema = ({ session }: CinemaProps) => {
   const getTicket = (row: string, seat: number) => {
     return tickets.filter(t => t.row === row && t.seat === seat)[0];
   };
-  console.log(tickets);
 
   return (
     <Flex bg={"#dbd9d9"} p={"md"} direction={"column"} align={"center"}>
