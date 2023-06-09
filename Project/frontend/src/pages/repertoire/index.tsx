@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Image,
+  Loader,
   Paper,
   ScrollArea,
   Text,
@@ -17,6 +18,7 @@ export const Repertoire = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleDrawer = (movie: Movie) => {
     setMovie(movie);
@@ -26,8 +28,11 @@ export const Repertoire = () => {
   const { getStoredMovies } = useMovies();
 
   useEffect(() => {
+    setLoading(true);
     getStoredMovies().then(data => {
       setMovies(data);
+    }).finally(() => {
+      setLoading(false);
     });
   }, []);
 
@@ -35,6 +40,7 @@ export const Repertoire = () => {
     <>
       <div>
         <h1>Repertoire</h1>
+        {loading && <Loader/>}
         <ScrollArea>
           <Flex>
             {movies?.map((movie, idx) => (
