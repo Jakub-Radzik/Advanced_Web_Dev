@@ -19,16 +19,23 @@ export const useMovies = () => {
       .then(response => response.data);
 
   const postStoredMovie = (movieBody: object) => {
-    axios.post(`${API_URL}/stored/movies`, movieBody, {
+    return axios.post(`${API_URL}/stored/movies`, movieBody, {
       withCredentials: true,
-    });
+    }).then(response => response.data);
   };
 
   const deleteStoredMovie = (movieId: number) => {
-  axios
-    .delete(`${API_URL}/stored/movies/${movieId}`, {
-      withCredentials: true
-    });
+    axios
+      .delete(`${API_URL}/stored/movies/${movieId}`, {
+        withCredentials: true
+      });
+  };
+
+  const flushCache = () => {
+    axios
+      .get(`${API_URL}/flush-cache`, {
+        withCredentials: true
+      });
   };
 
   return {
@@ -37,5 +44,6 @@ export const useMovies = () => {
     getMovies,
     postStoredMovie,
     deleteStoredMovie,
+    flushCache,
   };
 };
