@@ -15,12 +15,27 @@ export const useMovies = () => {
 
   const getMovies = () =>
     axios
-      .get<{ results: Movie[] }>(`${API_URL}/movies`)
+      .get<{ results: Movie[] }>(`${API_URL}/movies`, { withCredentials: true })
       .then(response => response.data);
+
+  const postStoredMovie = (movieBody: object) => {
+    axios.post(`${API_URL}/stored/movies`, movieBody, {
+      withCredentials: true,
+    });
+  };
+
+  const deleteStoredMovie = (movieId: number) => {
+  axios
+    .delete(`${API_URL}/stored/movies/${movieId}`, {
+      withCredentials: true
+    });
+  };
 
   return {
     getMovie,
     getStoredMovies,
     getMovies,
+    postStoredMovie,
+    deleteStoredMovie,
   };
 };

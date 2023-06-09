@@ -9,15 +9,20 @@ const ticketSorter = (r1: Ticket, r2: Ticket) => {
 export const Confirmation = () => {
   const { reservation } = useReservationContext();
   return (
-<Center>    <Flex direction={"column"}>
-    <Title>Tickets:</Title>
-      <Flex direction={"column"} my='lg'>
-        {reservation.sort(ticketSorter).map((ticket, idx) => (
-            <Title>{ticket.row}{ticket.seat} - {ticket.price} zł</Title>
-        ))}
+    <Center>
+      {" "}
+      <Flex direction={"column"}>
+        <Title>Tickets:</Title>
+        <Flex direction={"column"} my='lg'>
+          {reservation.sort(ticketSorter).map((ticket, idx) => (
+            <Title>
+              {ticket.row}
+              {ticket.seat} - {ticket.price} zł
+            </Title>
+          ))}
+        </Flex>
+        <Title>Razem: {reservation.length * 20} zł</Title>
       </Flex>
-    <Title>Razem: {reservation.length * 20} zł</Title>
-    </Flex>
     </Center>
   );
 };

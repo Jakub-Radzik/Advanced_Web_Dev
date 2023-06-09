@@ -7,6 +7,8 @@ import { Reservation } from "./pages/reservation";
 import { Admin } from "./pages/admin";
 import { Login } from "./pages/login";
 import { ConfirmPayment } from "./pages/confirmPayment";
+import { NewShow } from "./pages/new_show";
+import { NewMovie } from "./pages/new_movie";
 
 function App() {
   return (
@@ -28,7 +30,9 @@ function App() {
           <Route path='/reservate/:showId' element={<Reservation />} />
           <Route path='/login' element={<Login />} />
           <Route path='/admin' element={<Admin />} />
-          <Route path='/confirmPayment' element={<ConfirmPayment/>} />
+          <Route path='/confirmPayment' element={<ConfirmPayment />} />
+          <Route path='/new_show' element={<NewShow />} />
+          <Route path='/new_movie' element={<NewMovie />} />
         </Routes>
       </AppShell>
     </BrowserRouter>
