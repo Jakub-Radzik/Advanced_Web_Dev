@@ -54,3 +54,15 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     command: /opt/bitnami/scripts/redis/run.sh --maxmemory 100mb
+
+  frontend:
+    build: 
+      context: ./frontend/
+      dockerfile: Dockerfile.frontend
+    command: npm start
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend/src:/code/src
+      - ./frontend/public:/code/public
