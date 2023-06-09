@@ -1,11 +1,4 @@
-import {
-  Center,
-  Group,
-  Button,
-  Grid,
-  Space,
-  Stack,
-} from "@mantine/core";
+import { Center, Group, Button, Grid, Space, Stack } from "@mantine/core";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -19,7 +12,13 @@ export const NewMovie = () => {
   const [allMovies, setAllMovies] = useState<Movie[]>([]);
   const [storedMovies, setStoredMovies] = useState<Movie[]>([]);
 
-  const { getMovies, getStoredMovies, postStoredMovie, deleteStoredMovie, flushCache } = useMovies();
+  const {
+    getMovies,
+    getStoredMovies,
+    postStoredMovie,
+    deleteStoredMovie,
+    flushCache,
+  } = useMovies();
 
   useEffect(() => {
     getMovies().then(data => {
@@ -49,16 +48,19 @@ export const NewMovie = () => {
         runtime: movieToAdd?.runtime,
       };
 
-      postStoredMovie(movieData).then(
-        response => getStoredMovies().then(data => {
+      postStoredMovie(movieData).then(response =>
+        getStoredMovies().then(data => {
           setStoredMovies(data);
-        }));
+        })
+      );
     }
   };
 
   const handleRemoveFromStored = async (movieId: number) => {
     deleteStoredMovie(movieId);
-    setStoredMovies(storedMovies => storedMovies.filter((movie) => movie.id !== movieId));
+    setStoredMovies(storedMovies =>
+      storedMovies.filter(movie => movie.id !== movieId)
+    );
   };
 
   return (

@@ -13,5 +13,13 @@ export const useSessions = () => {
       .get<Session>(`${API_URL}/sessions/${sessionId}`)
       .then(response => response.data);
 
-  return { getMovieSessions, getSessionById };
+  const postSession = (sessionBody: object) => {
+    return axios
+      .post(`${API_URL}/sessions`, sessionBody, {
+        withCredentials: true,
+      })
+      .then(response => response.data);
+  };
+
+  return { getMovieSessions, getSessionById, postSession };
 };
