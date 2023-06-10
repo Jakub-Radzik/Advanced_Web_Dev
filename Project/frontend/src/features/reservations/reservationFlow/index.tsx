@@ -191,7 +191,7 @@ export const ReservationFlow = () => {
       <Group position='center' mt='xl'>
         {backButtonVisible && (
           <Button variant='default' onClick={handleBackButton}>
-            Back
+            Powrót
           </Button>
         )}
         {nextButtonVisible && (
@@ -199,7 +199,7 @@ export const ReservationFlow = () => {
             disabled={disabled}
             onClick={() => handleStepChange(active + 1)}
           >
-            Next step
+            Następny krok
           </Button>
         )}
       </Group>
