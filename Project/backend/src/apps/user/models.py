@@ -9,7 +9,6 @@ class BlacklistTokens(Model):
     """
 
     token = fields.CharField(max_length=250, unique=True)
-    email = fields.CharField(max_length=100)
 
 
 class ReservationToken(Model):
