@@ -8,9 +8,10 @@ import {
   Stack,
   Button,
   Paper,
+  Center,
 } from "@mantine/core";
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { SessionList } from "../../features/admin/components/sessionList";
 
 const PRIMARY_COL_HEIGHT = rem(750);
 
@@ -29,15 +30,17 @@ export const Admin = () => {
 
   return (
     <>
-      <Stack>
-        <Button onClick={handleGoogleLogin}>Login with Google</Button>
-        <Button>Logout</Button>
-      </Stack>
+      <Box maw={250}>
+        <Stack>
+          <Button onClick={handleGoogleLogin}>Login with Google</Button>
+          <Button color="red">Logout</Button>
+        </Stack>
+      </Box>
       <Container my='md'>
         <SimpleGrid
           cols={2}
           spacing='md'
-          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+
         >
           <Paper h={PRIMARY_COL_HEIGHT}>
             <Box ml={25} mr={25}>
@@ -46,13 +49,14 @@ export const Admin = () => {
                 <Button onClick={() => navigate("/new_show")}>
                   Dodaj nowy seans
                 </Button>
+                <SessionList />
               </Stack>
             </Box>
           </Paper>
           <Grid gutter='md'>
-            <Grid.Col>
-              <Paper h={SECONDARY_COL_HEIGHT} radius='md'>
-                <Box>
+            <Grid.Col span={12}>
+              <Paper h={SECONDARY_COL_HEIGHT} >
+                <Box ml={25} mr={25}>
                   <h2>Filmy</h2>
                   <Stack>
                     <Button onClick={() => navigate("/new_movie")}>
@@ -62,12 +66,15 @@ export const Admin = () => {
                 </Box>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={6}>
-              <Paper h={SECONDARY_COL_HEIGHT} radius='md' />
+            <Grid.Col span={12}>
+              <Paper h={SECONDARY_COL_HEIGHT} radius='md' >
+                <Box ml={25} mr={25}>
+                  <h2>Sale</h2>
+                </Box>
+
+              </Paper>
             </Grid.Col>
-            <Grid.Col span={6}>
-              <Paper h={SECONDARY_COL_HEIGHT} radius='md' />
-            </Grid.Col>
+
           </Grid>
         </SimpleGrid>
       </Container>
