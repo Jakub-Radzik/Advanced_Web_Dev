@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Stack, Paper, ScrollArea, Text } from "@mantine/core";
+import { Stack, ScrollArea } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import { Session } from "../../../../types/movie";
@@ -33,6 +33,7 @@ export const SessionList = () => {
               sessionId={session.id}
               roomName={session.room_fk.name}
               movieTitle={session.movie_fk.title}
+              renderDateAndButton={true}
               datetime={new Date(session.datetime)}
               onClickHandle={handleDeleteSession}
             />

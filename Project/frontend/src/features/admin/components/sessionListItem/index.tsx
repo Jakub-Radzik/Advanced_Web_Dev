@@ -4,16 +4,18 @@ type SessionListItemProps = {
   sessionId: number;
   roomName: string;
   movieTitle: string;
-  datetime: Date;
-  onClickHandle: Function;
+  datetime?: Date;
+  onClickHandle?: Function;
+  renderDateAndButton: Boolean;
 };
 
 export const SessionListItem = ({
   sessionId,
   roomName,
   movieTitle,
-  datetime,
-  onClickHandle,
+  renderDateAndButton,
+  datetime = new Date(),
+  onClickHandle = () => { },
 }: SessionListItemProps) => {
 
   return (
@@ -21,12 +23,17 @@ export const SessionListItem = ({
       <Stack ml='md' mb='md'>
         <h3>{movieTitle}</h3>
         <Text>{roomName}</Text>
-        <Text>{datetime.toLocaleString("pl-PL", {dateStyle: "long", timeStyle: "short"})}</Text>
-        <Center>
-          <Button onClick={() => onClickHandle(sessionId)} variant='outline'>
-            Usuń seans
-          </Button>
-        </Center>
+        {
+          renderDateAndButton &&
+          <>
+            <Text>{datetime.toLocaleString("pl-PL", { dateStyle: "long", timeStyle: "short" })}</Text>
+            <Center>
+              <Button onClick={() => onClickHandle(sessionId)} variant='outline'>
+                Usuń seans
+              </Button>
+            </Center>
+          </>
+        }
       </Stack>
     </Paper>
   );

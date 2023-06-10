@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { SessionList } from "../../features/admin/components/sessionList";
+import { RoomList } from "../../features/admin/components/roomList";
 
 const PRIMARY_COL_HEIGHT = rem(750);
 
@@ -55,7 +56,7 @@ export const Admin = () => {
           </Paper>
           <Grid gutter='md'>
             <Grid.Col span={12}>
-              <Paper h={SECONDARY_COL_HEIGHT} >
+              <Paper h={200} >
                 <Box ml={25} mr={25}>
                   <h2>Filmy</h2>
                   <Stack>
@@ -70,11 +71,10 @@ export const Admin = () => {
               <Paper h={SECONDARY_COL_HEIGHT} radius='md' >
                 <Box ml={25} mr={25}>
                   <h2>Sale</h2>
+                  <RoomList />
                 </Box>
-
               </Paper>
             </Grid.Col>
-
           </Grid>
         </SimpleGrid>
       </Container>
