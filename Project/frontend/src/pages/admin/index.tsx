@@ -10,13 +10,18 @@ import {
   Paper,
   Center,
 } from "@mantine/core";
+import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { SessionList } from "../../features/admin/components/sessionList";
 import { RoomList } from "../../features/admin/components/roomList";
+import { useMovies } from "../../hooks/useMovies";
 
 const PRIMARY_COL_HEIGHT = rem(750);
 
 export const Admin = () => {
+  const [renderPanel, setRenderPanel] = useState<boolean>(false);
+
   const handleGoogleLogin = async () => {
     try {
       window.location.replace("http://localhost:8008/api/v1/auth/token");
@@ -29,14 +34,16 @@ export const Admin = () => {
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - ${theme.spacing.md} / 2)`;
   const navigate = useNavigate();
 
-  return (
-    <>
-      <Box maw={250}>
-        <Stack>
-          <Button onClick={handleGoogleLogin}>Login with Google</Button>
-          <Button color="red">Logout</Button>
-        </Stack>
-      </Box>
+  const { getStatus } = useMovies();
+  useEffect(() => {
+    getStatus().then(
+      status => {
+        status === 200 ? setRenderPanel(true) : setRenderPanel(false)
+      });
+  }, []);
+
+  if (renderPanel) {
+    return (
       <Container my='md'>
         <SimpleGrid
           cols={2}
@@ -56,7 +63,19 @@ export const Admin = () => {
           </Paper>
           <Grid gutter='md'>
             <Grid.Col span={12}>
-              <Paper h={200} >
+              <Paper h={100} >
+                <Box ml={25} mr={25}>
+                  <h2>Konto</h2>
+                  <Stack>
+                    <Button color="red" onClick={() => setRenderPanel(false)}>
+                      Wyloguj się
+                    </Button>
+                  </Stack>
+                </Box>
+              </Paper>
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <Paper h={100} >
                 <Box ml={25} mr={25}>
                   <h2>Filmy</h2>
                   <Stack>
@@ -78,6 +97,15 @@ export const Admin = () => {
           </Grid>
         </SimpleGrid>
       </Container>
-    </>
-  );
+    )
+  }
+  else {
+    return (
+      <Center>
+          <Stack>
+            <Button onClick={handleGoogleLogin}>Login with Google</Button>
+          </Stack>
+      </Center>
+    );
+  }
 };
