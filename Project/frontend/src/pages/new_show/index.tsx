@@ -19,6 +19,17 @@ import { useMovies } from "../../hooks/useMovies";
 import { useSessions } from "../../hooks/useSessions";
 import { inFutureOrToday } from "../../utils/datetime";
 
+type PostProps = {
+  movie_fk_id?: number,
+  room_fk_id: number,
+  datefrom: string,
+  timefrom: string,
+  dateto: string,
+  timeto: string,
+  date_interval: number,
+  time_interval: number,
+};
+
 export const NewShow = () => {
   const navigate = useNavigate();
 
@@ -33,7 +44,7 @@ export const NewShow = () => {
   const getMovieIdByName = (name: string) => {
     const pickedMovie = storedMovies.find(movie => movie.title === name);
 
-    if (pickedMovie != undefined) {
+    if (pickedMovie !== undefined) {
       return pickedMovie.id;
     }
   };
@@ -41,12 +52,12 @@ export const NewShow = () => {
   useEffect(() => {
     getRooms().then(data => {
       setRooms(data);
-      console.log(data);
     });
 
     getStoredMovies().then(data => {
       setStoredMovies(data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const form = useForm({
@@ -57,8 +68,8 @@ export const NewShow = () => {
       timefrom: "0",
       dateto: new Date(),
       timeto: "0",
-      date_interval: 172800,
-      time_interval: 7200,
+      date_interval: 2,
+      time_interval: 2,
     },
 
     transformValues: values => ({
@@ -77,15 +88,19 @@ export const NewShow = () => {
         inFutureOrToday(value) ? null : "Data nie może być w przeszłości",
       dateto: value =>
         inFutureOrToday(value) ? null : "Data nie może być w przeszłości",
-      timefrom: value => (Number(value) != 0 ? null : "Podaj godzinę"),
-      timeto: value => (Number(value) != 0 ? null : "Podaj godzinę"),
+      timefrom: value => (Number(value) !== 0 ? null : "Podaj godzinę"),
+      timeto: value => (Number(value) !== 0 ? null : "Podaj godzinę"),
       date_interval: value => (value > 0 ? null : "Okres musi być dodatni"),
       time_interval: value => (value > 0 ? null : "Okres musi być dodatni"),
     },
   });
 
-  const handlePost = (values: object) => {
-    postSession(values);
+  const handlePost = (values: PostProps) => {
+    postSession({
+      ...values,
+      date_interval: values.date_interval * 24 * 3600,
+      time_interval: values.time_interval * 3600,
+    });
     navigate("/admin");
   };
 
@@ -131,15 +146,14 @@ export const NewShow = () => {
             {...form.getInputProps("timeto")}
           />
           <TextInput
-            label='Interwał godzinowy'
+            label='Interwał godzinowy odbywania seansu na danej sali w ciagu dnia'
             withAsterisk
             {...form.getInputProps("time_interval")}
           />
-          <TextInput
-            label='Interwał dniowy'
+          <Select
+            data={['1','2','3']} label='Interwał dniowy odbywania seansu'
             withAsterisk
-            {...form.getInputProps("date_interval")}
-          />
+            {...form.getInputProps("date_interval")}          />
           <Group position='center' mt='xl'>
             <Button variant='default' onClick={() => navigate("/admin")}>
               Powrót

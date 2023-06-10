@@ -9,6 +9,7 @@ import {
   Button,
   Paper,
   Center,
+  Title,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 
@@ -16,11 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { SessionList } from "../../features/admin/components/sessionList";
 import { RoomList } from "../../features/admin/components/roomList";
 import { useMovies } from "../../hooks/useMovies";
+import { useAuth } from "../../hooks/useAuth";
 
 const PRIMARY_COL_HEIGHT = rem(750);
 
 export const Admin = () => {
   const [renderPanel, setRenderPanel] = useState<boolean>(false);
+  const {logout } = useAuth();
+
 
   const handleGoogleLogin = async () => {
     try {
@@ -29,7 +33,6 @@ export const Admin = () => {
       console.error("Error during login:", error);
     }
   };
-
   const theme = useMantineTheme();
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - ${theme.spacing.md} / 2)`;
   const navigate = useNavigate();
@@ -40,6 +43,7 @@ export const Admin = () => {
       status => {
         status === 200 ? setRenderPanel(true) : setRenderPanel(false)
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (renderPanel) {
@@ -63,11 +67,15 @@ export const Admin = () => {
           </Paper>
           <Grid gutter='md'>
             <Grid.Col span={12}>
-              <Paper h={100} >
-                <Box ml={25} mr={25}>
-                  <h2>Konto</h2>
+              <Paper>
+                <Box ml={25} mr={25} py={"lg"}>
+                  <Title order={2}>Konto</Title>
                   <Stack>
-                    <Button color="red" onClick={() => setRenderPanel(false)}>
+                    <Button color="red" onClick={() =>{
+                      setRenderPanel(false)
+                      navigate("/")
+                      logout()
+                    }}>
                       Wyloguj się
                     </Button>
                   </Stack>
@@ -75,9 +83,9 @@ export const Admin = () => {
               </Paper>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Paper h={100} >
-                <Box ml={25} mr={25}>
-                  <h2>Filmy</h2>
+              <Paper >
+                <Box ml={25} mr={25} py={"lg"}>
+                  <Title order={2}>Filmy</Title>
                   <Stack>
                     <Button onClick={() => navigate("/new_movie")}>
                       Dodaj dostępny film
@@ -87,9 +95,9 @@ export const Admin = () => {
               </Paper>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Paper h={SECONDARY_COL_HEIGHT} radius='md' >
+              <Paper h={SECONDARY_COL_HEIGHT} radius='md'  py={"lg"}>
                 <Box ml={25} mr={25}>
-                  <h2>Sale</h2>
+                  <Title order={2}>Sale</Title>
                   <RoomList />
                 </Box>
               </Paper>

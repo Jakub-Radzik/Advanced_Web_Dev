@@ -1,9 +1,8 @@
-import { Button, Flex, Image, Stack, Paper, ScrollArea, Text } from "@mantine/core";
+import { Stack, Paper, ScrollArea, Text, Title, Badge } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import { Room } from "../../../../types/show";
 import { useRooms } from "../../../../hooks/useRooms";
-import { SessionListItem } from "../sessionListItem"
 
 export const RoomList = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -14,6 +13,7 @@ export const RoomList = () => {
     getRooms().then(data => {
       setRooms(data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -21,13 +21,15 @@ export const RoomList = () => {
       <ScrollArea h={300}>
         <Stack>
           {rooms.map((room, idx) => (
-            <SessionListItem 
-              key={idx}
-              sessionId={room.id}
-              roomName={`${room.rows} rzędów po ${room.seats_per_row} miejsc`}
-              movieTitle={room.name}
-              renderDateAndButton={false}
-            />
+            <Paper shadow='xs' radius='md' p={'xs'} key={idx}>
+              <Stack spacing={0}>
+                <Title order={2}>{room.name}</Title>
+                <Text>{`${room.rows} rzędów po ${room.seats_per_row} miejsc (${room.rows*room.seats_per_row})`}</Text>
+                {
+                  room.is_IMAX && <Badge color='red'>IMAX</Badge>
+                }
+              </Stack>
+            </Paper>
           ))}
         </Stack>
       </ScrollArea>

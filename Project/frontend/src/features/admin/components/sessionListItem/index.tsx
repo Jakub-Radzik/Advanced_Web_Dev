@@ -1,4 +1,4 @@
-import { Paper, Button, Stack, Text, Center, Badge, Box } from "@mantine/core";
+import { Paper, Button, Stack, Text, Center, Flex, Title} from "@mantine/core";
 
 type SessionListItemProps = {
   sessionId: number;
@@ -20,21 +20,23 @@ export const SessionListItem = ({
 
   return (
     <Paper shadow='xs' radius='md'>
-      <Stack ml='md' mb='md'>
-        <h3>{movieTitle}</h3>
+      <Flex align={"center"} justify={"space-between"} gap={'xs'}>
+      <Stack ml='md' mb='md' spacing={0}>
+        <Title order={3}>{movieTitle}</Title>
         <Text>{roomName}</Text>
         {
           renderDateAndButton &&
           <>
             <Text>{datetime.toLocaleString("pl-PL", { dateStyle: "long", timeStyle: "short" })}</Text>
             <Center>
-              <Button onClick={() => onClickHandle(sessionId)} variant='outline'>
-                Usuń seans
-              </Button>
             </Center>
           </>
         }
       </Stack>
+        <Button onClick={() => onClickHandle(sessionId)} variant='outline'>
+          Usuń seans
+        </Button>
+      </Flex>
     </Paper>
   );
 };
