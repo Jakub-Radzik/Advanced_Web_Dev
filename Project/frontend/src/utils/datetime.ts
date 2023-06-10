@@ -12,3 +12,8 @@ export const getTime = (date: string) => {
   const minute = dateObj.getMinutes().toString().padStart(2, "0");
   return `${hour}:${minute}`;
 };
+
+export const inFutureOrToday = (date: Date) => {
+  // Returns true if passed date is today or will be in the future
+  return date.setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0);
+};

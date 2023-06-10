@@ -80,11 +80,15 @@ async def sso_login_callback(request: Request, response: Response):
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expire
     )
-    response.set_cookie(
+    # response.set_cookie(
+    #     key="access_token", value=f"Bearer {access_token}", httponly=True
+    # )
+
+    redirect_response = RedirectResponse("http://localhost:8080/admin")
+    redirect_response.set_cookie(
         key="access_token", value=f"Bearer {access_token}", httponly=True
     )
-    # PLEASE DONT CHANGE IT
-    return RedirectResponse("http://localhost:8080/admin")
+    return redirect_response
 
 
 @router.get(

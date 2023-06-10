@@ -60,7 +60,7 @@ async def get_movies(
 
 
 @router.get("/stored/movies", dependencies=[Depends(RateLimiter(times=5, seconds=1))])
-@redis_cache
+#@redis_cache
 async def get_stored_movies():
     """Get movies from database"""
     movies = await Movie_Pydantic.from_queryset(Movie.all())
