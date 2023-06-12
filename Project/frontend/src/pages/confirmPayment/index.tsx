@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePayments } from "../../hooks/usePayments";
-import { Center, Title } from "@mantine/core";
+import { Center, Loader, Title } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
 export const ConfirmPayment = () => {
@@ -21,7 +21,7 @@ export const ConfirmPayment = () => {
 
   return (
     <Center>
-      {code === 0 && !error && <Title>Payment processing</Title>}
+      {code === 0 && !error && <><Title>Payment processing</Title> <Loader/> </>}
       {code === 200 && !error && (
         <Title>Payment Succeeded. Check your email</Title>
       )}

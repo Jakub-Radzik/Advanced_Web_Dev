@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, Group, Stepper } from "@mantine/core";
+import { Button, Group, Loader, Stepper } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { Cinema } from "../cinema";
 import { useReservationContext } from "../state";
@@ -156,7 +156,7 @@ export const ReservationFlow = () => {
           {session ? (
             <MovieSelection session={session} />
           ) : (
-            <Box>Ładowanie...</Box>
+            <Loader/>
           )}
         </Stepper.Step>
 
@@ -164,7 +164,7 @@ export const ReservationFlow = () => {
           label='Wybór miejsc'
           description='Wybierz miejsca i bilety'
         >
-          {session ? <Cinema session={session} /> : <Box>Ładowanie...</Box>}
+          {session ? <Cinema session={session} /> : <Loader/>}
         </Stepper.Step>
 
         <Stepper.Step
@@ -180,11 +180,9 @@ export const ReservationFlow = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          {clientSecret ? (
-            <Payment clientSecret={clientSecret} />
-          ) : (
-            <Box>Ładowanie...</Box>
-          )}
+          {
+            clientSecret ? <Payment clientSecret={clientSecret} /> : <Loader/>
+          }
         </Stepper.Completed>
       </Stepper>
 
