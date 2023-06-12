@@ -13,5 +13,24 @@ export const useSessions = () => {
       .get<Session>(`${API_URL}/sessions/${sessionId}`)
       .then(response => response.data);
 
-  return { getMovieSessions, getSessionById };
+  const getAllSessions = () => 
+    axios
+      .get<Session[]>(`${API_URL}/sessions`)
+      .then(response => response.data);
+      
+  const postSession = (sessionBody: object) => {
+    return axios
+      .post(`${API_URL}/sessions`, sessionBody, {
+        withCredentials: true,
+      })
+      .then(response => response.data);
+  };
+
+  const deleteSession = (id: number) => {
+    axios.delete(`${API_URL}/sessions/${id}`, {
+      withCredentials: true,
+    });
+  };
+
+  return { getMovieSessions, getSessionById, getAllSessions, postSession, deleteSession };
 };

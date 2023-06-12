@@ -18,16 +18,18 @@ export const ReservationFlow = () => {
   const MAX_STEP = 4;
   const [active, setActive] = useState(0);
   const [, setHighestStepVisited] = useState(active);
-  const { reservation, clearReservation, setClientData } = useReservationContext();
+  const { reservation, clearReservation, setClientData } =
+    useReservationContext();
   let { showId } = useParams();
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
-  const [backButtonVisible, setBackButtonVisible] = useState(true); 
-  const [nextButtonVisible, setNextButtonVisible] = useState(true); 
+  const [backButtonVisible, setBackButtonVisible] = useState(true);
+  const [nextButtonVisible, setNextButtonVisible] = useState(true);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   const { getSessionById } = useSessions();
-  const {reserveTickets, reserveTicketsEmail, reserveCheckout} = usePayments();
+  const { reserveTickets, reserveTicketsEmail, reserveCheckout } =
+    usePayments();
 
   useEffect(() => {
     if (showId) {
@@ -36,34 +38,34 @@ export const ReservationFlow = () => {
   }, [showId]);
 
   useEffect(() => {
-    if(active === 0){
+    if (active === 0) {
       clearReservation();
     }
-  },[active])
+  }, [active]);
 
   const setBackVisibility = (nextStep: number) => {
-    if (nextStep === 0 || nextStep === 1 || nextStep === 2 || nextStep === 4 ) {
-      setBackButtonVisible(true)
+    if (nextStep === 0 || nextStep === 1 || nextStep === 2 || nextStep === 4) {
+      setBackButtonVisible(true);
       return;
     }
 
     if (nextStep === 3) {
-      setBackButtonVisible(false)
+      setBackButtonVisible(false);
       return;
     }
-  }
+  };
 
   const setNextVisibility = (nextStep: number) => {
-    if (nextStep !== 4 ) {
-      setNextButtonVisible(true)
+    if (nextStep !== 4) {
+      setNextButtonVisible(true);
       return;
     }
 
     if (nextStep === 4) {
-      setNextButtonVisible(false)
+      setNextButtonVisible(false);
       return;
     }
-  }
+  };
 
   const handleStepChange = (nextStep: number) => {
     const isOutOfBounds = nextStep > MAX_STEP || nextStep < 0;
@@ -75,11 +77,11 @@ export const ReservationFlow = () => {
       return;
     }
 
-    if(nextStep === 2 && !reservation.length) {
+    if (nextStep === 2 && !reservation.length) {
       return;
     }
 
-    if(nextStep === 3 && reservation.length) {
+    if (nextStep === 3 && reservation.length) {
       reserveTickets(reservation.map(r => r.id));
     }
 
@@ -94,7 +96,7 @@ export const ReservationFlow = () => {
         reserveCheckout().then(res => {
           setClientSecret(res.data.client_secret);
         });
-      })
+      });
     }
 
     setActive(nextStep);
@@ -190,12 +192,14 @@ export const ReservationFlow = () => {
             Back
           </Button>
         )}
-        {nextButtonVisible && (        <Button
-          disabled={disabled}
-          onClick={() => handleStepChange(active + 1)}
-        >
-          Next step
-        </Button>)}
+        {nextButtonVisible && (
+          <Button
+            disabled={disabled}
+            onClick={() => handleStepChange(active + 1)}
+          >
+            Next step
+          </Button>
+        )}
       </Group>
     </>
   );

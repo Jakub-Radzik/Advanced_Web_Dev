@@ -1,7 +1,7 @@
 export type ClientForm = {
-    email: string,
-    termsOfService: boolean,
-    phone: string,
-    firstName: string,
-    lastName: string,
+  email: string;
+  termsOfService: boolean;
+  phone: string;
+  firstName: string;
+  lastName: string;
 };

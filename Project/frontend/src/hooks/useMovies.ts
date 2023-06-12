@@ -15,12 +15,41 @@ export const useMovies = () => {
 
   const getMovies = () =>
     axios
-      .get<{ results: Movie[] }>(`${API_URL}/movies`)
+      .get<{ results: Movie[] }>(`${API_URL}/movies`, { withCredentials: true })
       .then(response => response.data);
+
+  const getStatus = () =>
+      axios
+        .get<{ results: Movie[] }>(`${API_URL}/movies`, { withCredentials: true })
+        .then(response => response.status);
+
+  const postStoredMovie = (movieBody: object) => {
+    return axios
+      .post(`${API_URL}/stored/movies`, movieBody, {
+        withCredentials: true,
+      })
+      .then(response => response.data);
+  };
+
+  const deleteStoredMovie = (movieId: number) => {
+    axios.delete(`${API_URL}/stored/movies/${movieId}`, {
+      withCredentials: true,
+    });
+  };
+
+  const flushCache = () => {
+    axios.get(`${API_URL}/flush-cache`, {
+      withCredentials: true,
+    }).then(response => response.status);
+  };
 
   return {
     getMovie,
     getStoredMovies,
     getMovies,
+    postStoredMovie,
+    deleteStoredMovie,
+    flushCache,
+    getStatus,
   };
 };
