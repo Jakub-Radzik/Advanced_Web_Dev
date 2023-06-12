@@ -64,5 +64,5 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./frontend/src:/code/src
-      - ./frontend/public:/code/public
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
