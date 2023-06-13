@@ -1,4 +1,4 @@
-import { Center, Flex, Title } from "@mantine/core";
+import { Center, Flex, Title, Table } from "@mantine/core";
 import { useReservationContext } from "../../../state";
 import { Ticket } from "../../../../../types/ticket";
 
@@ -11,17 +11,33 @@ export const Confirmation = () => {
   return (
     <Center>
       {" "}
-      <Flex direction={"column"}>
-        <Title>Tickets:</Title>
-        <Flex direction={"column"} my='lg'>
-          {reservation.sort(ticketSorter).map((ticket, idx) => (
-            <Title>
-              {ticket.row}
-              {ticket.seat} - {ticket.price} zł
-            </Title>
-          ))}
-        </Flex>
-        <Title>Razem: {reservation.length * 20} zł</Title>
+      <Flex direction={"column"} mt={100}>
+        <Title>Wybrane bilety:</Title>
+        <Table my='lg' verticalSpacing="xs" fontSize="lg" highlightOnHover>
+          <tbody>
+            {reservation.sort(ticketSorter).map((ticket, idx) => (
+              <tr key={idx}>
+                <td>
+                  {ticket.row}{ticket.seat}
+                </td>
+                <td>
+                  {ticket.price} zł
+                </td>
+              </tr>
+            ))}
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>
+                Razem
+              </th>
+              <th>
+                {reservation.length * 20} zł
+              </th>
+            </tr>
+          </tfoot>
+        </Table>
       </Flex>
     </Center>
   );
