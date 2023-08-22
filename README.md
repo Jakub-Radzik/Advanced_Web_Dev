@@ -8,4 +8,4 @@
 - Lab 6 - Vue
 - Lab 7 - GraphQL
 - Lab 8 - WebSocket
-- Project - ?
+- Project - Cinema System
